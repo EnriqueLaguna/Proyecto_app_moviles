@@ -1,28 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_app_moviles/Register/register.dart';
+import 'package:proyecto_app_moviles/HomePage/homePage.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
-  int _currIndex = 0;
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
-  final _pageList = <Widget>[
-    RegisterPage()
-  ];
-
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Material App Bar'),
-        ),
-        body: IndexedStack(
-          index: _currIndex,
-          children: _pageList,
-        ),
-      ),
+      theme: ThemeData(primarySwatch: Colors.lightGreen),
+      home: HomePage()
     );
   }
 }
