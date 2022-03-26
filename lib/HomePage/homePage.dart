@@ -3,6 +3,8 @@ import 'package:proyecto_app_moviles/Catalogo/catalogo.dart';
 import 'package:proyecto_app_moviles/Cuidados/cuidado.dart';
 import 'package:proyecto_app_moviles/HomePage/inicio.dart';
 import 'package:proyecto_app_moviles/Login/login.dart';
+import 'package:proyecto_app_moviles/Mapa/mapa.dart';
+import 'package:proyecto_app_moviles/Pago/pago.dart';
 import 'package:proyecto_app_moviles/Register/register.dart';
 import 'package:proyecto_app_moviles/iconos.dart';
 
@@ -20,7 +22,9 @@ class _HomePageState extends State<HomePage> {
     Inicio(),
     Catalogo(),
     CuidadosPage(),
-    LoginPage()
+    LoginPage(),
+    Pago(),
+    Mapa()
   ];
 
   final _namePageList = [
@@ -28,6 +32,8 @@ class _HomePageState extends State<HomePage> {
     "Catálogo",
     "Cuidados",
     "Mi perfil",
+    "Mi carrito",
+    "Rastreo"
   ];
 
   @override
@@ -75,6 +81,14 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             label: _namePageList[3],
             icon: Icon(Icons.person),
+          ),
+          BottomNavigationBarItem(
+            label: _namePageList[4],
+            icon: Icon(Icons.shopping_cart),
+          ),
+          BottomNavigationBarItem(
+            label: _namePageList[5],
+            icon: Icon(Icons.map),
           ),
         ],
       ),
