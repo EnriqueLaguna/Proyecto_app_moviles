@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   int _currentPageIndex = 0;
   final _pageList = <Widget>[
     Inicio(),
-    catalogo(),
+    Catalogo(),
     CuidadosPage(),
     LoginPage()
   ];

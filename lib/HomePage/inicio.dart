@@ -27,9 +27,8 @@ class _InicioState extends State<Inicio> {
           )
         ),
 
-        //Reemplazar esto por una ListView.builder porque es informacion que vendra de la base
-        // de datos
-
+        //Reemplazar esto por una ListView.builder porque es informacion que vendra de la base de datos.
+        
         Card(
             clipBehavior: Clip.antiAlias,
             child: Column(
