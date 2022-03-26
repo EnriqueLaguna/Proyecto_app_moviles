@@ -33,7 +33,7 @@ class _CatalogoState extends State<Catalogo> {
               gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 20.0,
-                childAspectRatio: MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 1.6),
+                childAspectRatio: MediaQuery.of(context).size.width / (MediaQuery.of(context).size.height / 1.7),
               ),
               itemBuilder: (BuildContext context, index){
                 return ItemCatalogo();
