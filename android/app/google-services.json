@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "733631793118",
+    "project_id": "proyecto-oxygentou-moviles",
+    "storage_bucket": "proyecto-oxygentou-moviles.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733631793118:android:d911613ac301b404963f4f",
+        "android_client_info": {
+          "package_name": "com.example.proyecto_app_moviles"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "733631793118-k9mi9thbt1ovg6lk5dbqft7elorklkbd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.proyecto_app_moviles",
+            "certificate_hash": "a95ed4129f1b149d21484cd7f05ebe3c162e2478"
+          }
+        },
+        {
+          "client_id": "733631793118-eoc2hgng02a017vrb8ghkp1g4ocsg36t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkHoK4irLL7NyBVxE2-u9_ZdBGrkNVNw0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "733631793118-eoc2hgng02a017vrb8ghkp1g4ocsg36t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
