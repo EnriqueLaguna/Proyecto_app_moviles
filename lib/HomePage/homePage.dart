@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:proyecto_app_moviles/Catalogo/catalogo.dart';
 import 'package:proyecto_app_moviles/Cuidados/cuidado.dart';
 import 'package:proyecto_app_moviles/HomePage/inicio.dart';
-import 'package:proyecto_app_moviles/Login/login.dart';
 import 'package:proyecto_app_moviles/Mapa/mapa.dart';
 import 'package:proyecto_app_moviles/Pago/pago.dart';
-import 'package:proyecto_app_moviles/Register/register.dart';
+import 'package:proyecto_app_moviles/Perfil/perfPage.dart';
 import 'package:proyecto_app_moviles/iconos.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,7 +21,7 @@ class _HomePageState extends State<HomePage> {
     Inicio(),
     Catalogo(),
     CuidadosPage(),
-    LoginPage(),
+    Perfil(),
     Pago(),
     Mapa()
   ];
