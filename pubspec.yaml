@@ -12,6 +12,15 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   percent_indicator: ^3.4.0
+  firebase_core:
+  firebase_auth:
+  flutter_bloc:
+  equatable:
+  google_sign_in:
+  cloud_firestore:
+  flutter_shimmer:
+  flutterfire_ui:
+  firebase_storage:
 
 dev_dependencies:
   flutter_test:
