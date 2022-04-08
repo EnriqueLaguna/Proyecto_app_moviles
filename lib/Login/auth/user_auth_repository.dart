@@ -50,7 +50,8 @@ class UserAuthRepository {
       var userDoc = await FirebaseFirestore.instance.collection("users").doc(uid).get();
       if(!userDoc.exists){
         await FirebaseFirestore.instance.collection("users").doc(uid).set({
-          "tipsListId":[]
+          "tipsListId":[],
+          "catalogueListId":[]
         });
       } else {
         return;
