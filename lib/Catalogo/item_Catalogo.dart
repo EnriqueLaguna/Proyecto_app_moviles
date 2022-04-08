@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ItemCatalogo extends StatefulWidget {
-  // final Map<String, dynamic> allCatalogoData;
-  ItemCatalogo({Key? key, /*required this.allCatalogoData*/}) : super(key: key);
+  final Map<String, dynamic> allCatalogoData;
+  ItemCatalogo({Key? key, required this.allCatalogoData}) : super(key: key);
 
   @override
   State<ItemCatalogo> createState() => _ItemCatalogoState();
@@ -23,30 +23,57 @@ class _ItemCatalogoState extends State<ItemCatalogo> {
                   Container(
                     child: AspectRatio(
                       aspectRatio: 17/20,
-                      child: Image.network("https://t1.uc.ltmcdn.com/es/posts/6/9/5/como_cuidar_las_plantas_suculentas_guia_de_cuidados_47596_orig.jpg", fit: BoxFit.cover),
+                      child: Image.network(widget.allCatalogoData["picture"].toString(), fit: BoxFit.cover),
                     ),
                   ),
-                  // Image.network("https://t1.uc.ltmcdn.com/es/posts/6/9/5/como_cuidar_las_plantas_suculentas_guia_de_cuidados_47596_orig.jpg", 
-                  // fit: BoxFit.cover
-                  // ),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Container(
-                        color: Color.fromARGB(158, 31, 31, 31),
-                        child: ListTile(
-                          textColor: Colors.white,
-                          title: Text("Suculenta",),
-                          subtitle: Text("Planta que parece de plastico"),
+                      FittedBox(
+                        child: Container(
+                          child: Text(widget.allCatalogoData["title"].toString(), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 24),),
+                          color: Colors.black54,
                         ),
+                        fit: BoxFit.cover,
                       ),
+                      Spacer(),
                       MaterialButton(
                         color: Colors.yellow,
                         child: Text("Ver"),
-                        onPressed:(){}
+                        onPressed:(){
+                          showDialog(
+                            context: context, 
+                            builder: (BuildContext){
+                              return AlertDialog(
+                                title: ListTile(
+                                  leading: Image.network(widget.allCatalogoData["picture"].toString(), fit: BoxFit.cover),
+                                  title: Text(widget.allCatalogoData["title"].toString(),),
+                                  trailing: Text("\$${widget.allCatalogoData['price'].toString()}"),
+                                ),
+                                content: Text(widget.allCatalogoData["description"].toString()),
+                                actions: [
+                                  TextButton(onPressed: ()=>Navigator.of(context).pop(), child: Text("Comprar", style: TextStyle(color: Colors.yellow[700]),)),
+                                  TextButton(onPressed: ()=>Navigator.of(context).pop(), child: Text("Aceptar", style: TextStyle(color: Colors.yellow[700]),)),
+                                ],
+                              );
+                            }
+                          );
+                        }
                       ),
                     ],
-                  )
+                  ),
+                  // Column(
+                  //   mainAxisAlignment: MainAxisAlignment.start,
+                  //   children: [
+                  //     Container(
+                  //       color: Color.fromARGB(158, 31, 31, 31),
+                  //       child: ListTile(
+                  //         textColor: Colors.white,
+                  //         title: Text(widget.allCatalogoData["title"].toString(), style: TextStyle(fontWeight: FontWeight.bold),),
+                  //         subtitle: Text(widget.allCatalogoData["description"].toString()),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   
                 ]
               )  

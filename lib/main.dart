@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:proyecto_app_moviles/Catalogo/bloc/catalogo_bloc.dart';
 import 'package:proyecto_app_moviles/HomePage/homePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:proyecto_app_moviles/Login/auth/bloc/auth_bloc.dart';
@@ -18,6 +19,7 @@ void main() async {
         BlocProvider(
           create: ((context) => CreateCatalogoBloc()),
         ),
+        BlocProvider(create: (context) => CatalogoBloc()..add(CatalogoGetEvent()))
       ], 
       child: MyApp()
     )
