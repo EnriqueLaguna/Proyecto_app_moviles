@@ -4,6 +4,7 @@ import 'package:proyecto_app_moviles/HomePage/homePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:proyecto_app_moviles/Login/auth/bloc/auth_bloc.dart';
 import 'package:proyecto_app_moviles/Login/login.dart';
+import 'package:proyecto_app_moviles/Perfil/bloc/create_catalogo_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +14,10 @@ void main() async {
       providers: [
         BlocProvider(
           create: (context) => AuthBloc()..add(VerifyAuthEvent())
-        )
+        ),
+        BlocProvider(
+          create: ((context) => CreateCatalogoBloc()),
+        ),
       ], 
       child: MyApp()
     )
