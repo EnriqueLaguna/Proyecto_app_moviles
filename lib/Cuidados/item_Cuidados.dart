@@ -47,12 +47,11 @@ class _ItemCuidadosState extends State<ItemCuidados> {
                                 title: ListTile(
                                   leading: Image.network(widget.allCuidadosData["picture"].toString(), fit: BoxFit.cover),
                                   title: Text(widget.allCuidadosData["title"].toString(),),
-                                  trailing: Text("\$${widget.allCuidadosData['price'].toString()}"),
+                                  trailing: Text("${widget.allCuidadosData['likes'].toString()} likes"),
                                 ),
                                 content: Text(widget.allCuidadosData["description"].toString()),
                                 actions: [
-                                  TextButton(onPressed: ()=>Navigator.of(context).pop(), child: Text("Comprar", style: TextStyle(color: Colors.yellow[700]),)),
-                                  TextButton(onPressed: ()=>Navigator.of(context).pop(), child: Text("Aceptar", style: TextStyle(color: Colors.yellow[700]),)),
+                                  TextButton(onPressed: ()=>Navigator.of(context).pop(), child: Text("Salir", style: TextStyle(color: Colors.yellow[700]),)),
                                 ],
                               );
                             }
