@@ -16,10 +16,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Oxygen To U', style: TextStyle(color: Colors.white),),
+      ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Column(children: [
-          const Text("Nombre de la aplicación", style: TextStyle(fontWeight: FontWeight.bold),),
+          Text("Pagina de inicio", style: TextStyle(fontSize: 40, color: Color.fromRGBO(5, 122, 24, 100))),
           TextFormField(
             decoration: InputDecoration(
               border: borde,

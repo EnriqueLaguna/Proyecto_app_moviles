@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto_app_moviles/Catalogo/catalogo.dart';
 import 'package:proyecto_app_moviles/Cuidados/cuidado.dart';
 import 'package:proyecto_app_moviles/HomePage/inicio.dart';
+import 'package:proyecto_app_moviles/Login/auth/bloc/auth_bloc.dart';
 import 'package:proyecto_app_moviles/Mapa/mapa.dart';
 import 'package:proyecto_app_moviles/Pago/pago.dart';
 import 'package:proyecto_app_moviles/Perfil/perfPage.dart';
@@ -43,9 +45,11 @@ class _HomePageState extends State<HomePage> {
         title: Text('Proyecto Móviles', style: TextStyle(color: Colors.yellow[50]),),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.notifications, color: Colors.yellow[50],),
+            icon: Icon(Icons.logout, color: Colors.yellow[50],),
             onPressed: () {
-              //do something
+              //Log out del usuario
+              BlocProvider.of<AuthBloc>(context).add(SignOutEvent());
+
             },
           )
         ],
