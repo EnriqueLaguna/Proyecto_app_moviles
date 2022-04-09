@@ -5,6 +5,7 @@ import 'package:proyecto_app_moviles/HomePage/homePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:proyecto_app_moviles/Login/auth/bloc/auth_bloc.dart';
 import 'package:proyecto_app_moviles/Login/login.dart';
+import 'package:proyecto_app_moviles/Perfil/Edit_Catalogo/bloc/editcatalogo_bloc.dart';
 import 'package:proyecto_app_moviles/Perfil/bloc/create_catalogo_bloc.dart';
 
 void main() async {
@@ -19,7 +20,12 @@ void main() async {
         BlocProvider(
           create: ((context) => CreateCatalogoBloc()),
         ),
-        BlocProvider(create: (context) => CatalogoBloc()..add(CatalogoGetEvent()))
+        BlocProvider(
+          create: (context) => CatalogoBloc()..add(CatalogoGetEvent())
+        ),
+        BlocProvider(
+          create: ((context) => EditcatalogoBloc())
+        )
       ], 
       child: MyApp()
     )

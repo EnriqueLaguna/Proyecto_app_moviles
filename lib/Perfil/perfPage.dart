@@ -2,7 +2,13 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:proyecto_app_moviles/Perfil/Edit_Catalogo/bloc/editcatalogo_bloc.dart';
 import 'package:proyecto_app_moviles/Perfil/create_catalogo_item.dart';
+import 'package:proyecto_app_moviles/Catalogo/bloc/catalogo_bloc.dart';
+import 'package:proyecto_app_moviles/Catalogo/item_Catalogo.dart';
+import 'package:proyecto_app_moviles/Perfil/Edit_Catalogo/show_catalogo_item.dart';
+
 
 class Perfil extends StatefulWidget {
   Perfil({Key? key}) : super(key: key);
@@ -30,19 +36,37 @@ class _PerfilState extends State<Perfil> {
 
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: MaterialButton(
-              color: Colors.lightGreen,
-              child: Text("Agregar planta al catalogo"),
-              onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: ((context) => CreateCatalogoItem())
-                  )
-                );
-              },
+            child: Column(
+              children: [
+                MaterialButton(
+                  color: Colors.lightGreen,
+                  child: Text("Agregar planta al catalogo"),
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => CreateCatalogoItem())
+                      )
+                    );
+                  },
+                ),
+                MaterialButton(
+                  color: Colors.yellowAccent,
+                  child: Text("Ver mi catalogo"),
+                  onPressed: (){
+                    BlocProvider.of<EditcatalogoBloc>(context).add(GetAllMyDataEvent());
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => ShowCatalogoItem())
+                      )
+                    );
+                  },
+                ),
+              ],
             ),
-          )
+          ),
+          
         ],
       ),
     );
