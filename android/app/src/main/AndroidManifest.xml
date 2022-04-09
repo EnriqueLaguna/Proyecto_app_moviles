@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.proyecto_app_moviles">
-   <application
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <application
         android:label="proyecto_app_moviles"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

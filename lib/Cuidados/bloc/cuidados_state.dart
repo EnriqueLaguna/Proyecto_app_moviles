@@ -17,4 +17,4 @@ class CuidadosSuccess extends CuidadosState {
   List<Object> get props => this.data;
 }
 
-class CuidadosError extends CatalogoState {}
+class CuidadosError extends CuidadosState {}

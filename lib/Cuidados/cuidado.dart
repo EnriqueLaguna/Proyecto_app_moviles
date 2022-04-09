@@ -42,27 +42,31 @@ class _CuidadosPageState extends State<CuidadosPage> {
               // TODO: implement listener
             },
             builder: (context, state) {
-              if(!(state is CuidadosSuccess))
+              if(state is CuidadosError){
                 return Center(child: CircularProgressIndicator(),);
-              var data = state.data;
-              return SizedBox(
-                height: MediaQuery.of(context).size.height * 0.5,
-                child: RefreshIndicator(
-                  onRefresh: () async => BlocProvider.of<CuidadosBloc>(context).add(CuidadosGetEvent()),
-                  child: GridView.builder(
-                    physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                      itemCount: data.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 20.0,
-                        childAspectRatio: MediaQuery.of(context).size.width /
-                            (MediaQuery.of(context).size.height / 1.7),
-                      ),
-                      itemBuilder: (BuildContext context, index) {
-                        return ItemCuidados(allCuidadosData: data[index],);
-                      }),
-                ),
-              );
+              } else if (state is CuidadosSuccess){
+                var data = state.data;
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  child: RefreshIndicator(
+                    onRefresh: () async => BlocProvider.of<CuidadosBloc>(context).add(CuidadosGetEvent()),
+                    child: GridView.builder(
+                      physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+                        itemCount: data.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 20.0,
+                          childAspectRatio: MediaQuery.of(context).size.width /
+                              (MediaQuery.of(context).size.height / 1.7),
+                        ),
+                        itemBuilder: (BuildContext context, index) {
+                          return ItemCuidados(allCuidadosData: data[index],);
+                        }),
+                  ),
+                );
+              } else {
+                return Text("Se murio");
+              }
             },
           ),
       ],),
