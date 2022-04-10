@@ -7,7 +7,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:proyecto_app_moviles/Login/auth/bloc/auth_bloc.dart';
 import 'package:proyecto_app_moviles/Login/login.dart';
 import 'package:proyecto_app_moviles/Perfil/Edit_Catalogo/bloc/editcatalogo_bloc.dart';
+import 'package:proyecto_app_moviles/Perfil/Edit_Cuidados/bloc/editcuidados_bloc.dart';
 import 'package:proyecto_app_moviles/Perfil/bloc/create_catalogo_bloc.dart';
+import 'package:proyecto_app_moviles/Perfil/bloc/create_cuidados_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,10 +27,16 @@ void main() async {
           create: (context) => CatalogoBloc()..add(CatalogoGetEvent())
         ),
         BlocProvider(
-          create: ((context) => EditcatalogoBloc())
+          create: (context) => EditcatalogoBloc()
         ),
         BlocProvider(
           create: (context) => CuidadosBloc()..add(CuidadosGetEvent())
+        ),
+        BlocProvider(
+          create: ((context) => CreateCuidadosBloc()),
+        ),
+        BlocProvider(
+          create: (context) => EditcuidadosBloc()
         )
       ], 
       child: MyApp()

@@ -8,6 +8,9 @@ import 'package:proyecto_app_moviles/Perfil/create_catalogo_item.dart';
 import 'package:proyecto_app_moviles/Catalogo/bloc/catalogo_bloc.dart';
 import 'package:proyecto_app_moviles/Catalogo/item_Catalogo.dart';
 import 'package:proyecto_app_moviles/Perfil/Edit_Catalogo/show_catalogo_item.dart';
+import 'package:proyecto_app_moviles/Perfil/create_cuidados_item.dart';
+import 'package:proyecto_app_moviles/Perfil/Edit_Cuidados/bloc/editcuidados_bloc.dart';
+import 'package:proyecto_app_moviles/Perfil/Edit_Cuidados/show_cuidados_item.dart';
 
 
 class Perfil extends StatefulWidget {
@@ -66,7 +69,39 @@ class _PerfilState extends State<Perfil> {
               ],
             ),
           ),
-          
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                MaterialButton(
+                  color: Colors.lightGreen,
+                  child: Text("Crear nuevo tip de cuidado"),
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => CreateCuidadosItem())
+                      )
+                    );
+                  },
+                ),
+                MaterialButton(
+                  color: Colors.yellowAccent,
+                  child: Text("Ver mis tips de cuidado"),
+                  onPressed: (){
+                    BlocProvider.of<EditcuidadosBloc>(context).add(GetAllMyDataEventCuidados());
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => ShowCuidadosItem())
+                      )
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
