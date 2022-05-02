@@ -25,7 +25,7 @@ class _PagoState extends State<Pago> {
       ),
       body: BlocConsumer<PagoBloc, PagoState>(
         listener: (context, state) {
-          // TODO: implement listener
+          
         },
         builder: (context, state) {
           if(state is PagoError || state is PagoInitial)
@@ -63,6 +63,20 @@ class _PagoState extends State<Pago> {
                                 children: [
                                   Text("${item["title"].toString()}", style: TextStyle(fontSize: 17),),
                                   Text("\$${item["price"].toString()}", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
+                                  Container(
+                                    width:50,
+                                    child: TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      initialValue: "1",
+                                      onChanged: (inputCantidad){
+                                        item["cantidad"] = inputCantidad;
+                                        calcTotal(data);
+                                        setState(() {
+                                          
+                                        });
+                                      },
+                                    ),                                    
+                                  ),
                                   IconButton(onPressed: (){
                                     BlocProvider.of<PagoBloc>(context).add(DeletePagoEvent(itemId: item["docId"]));
                                   }, 
@@ -126,7 +140,7 @@ class _PagoState extends State<Pago> {
                           border: Border(bottom: BorderSide(color: Colors.grey.shade300, width: 2),),
                         ),
                       ),
-                       Container(
+                      Container(
                         margin: EdgeInsets.all(10.0),
                         child: Column(
                           children: [
@@ -184,7 +198,14 @@ class _PagoState extends State<Pago> {
 
   String calcTotal(List<Map<String, dynamic>> data) {
     double r = 0;
-    for (var item in data) r+=(item["price"] as num);
+    for (var item in data){
+      if(item["cantidad"]!= null && !item["cantidad"].toString().isEmpty){
+        r+=(item["price"] as num) * int.parse(item["cantidad"]);
+      }else{
+        r+=(item["price"] as num);
+      }
+      
+    } 
     return r.toString();
   }
 }

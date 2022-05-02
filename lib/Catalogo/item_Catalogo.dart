@@ -53,7 +53,11 @@ class _ItemCatalogoState extends State<ItemCatalogo> {
                                 ),
                                 content: Text(widget.allCatalogoData["description"].toString()),
                                 actions: [
-                                  TextButton(onPressed: (){BlocProvider.of<PagoBloc>(context).add(AddPagoEvent(itemId: widget.allCatalogoData["docId"]));Navigator.of(context).pop();}, child: Text("Comprar", style: TextStyle(color: Colors.yellow[700]),)),
+                                  TextButton(onPressed: (){
+                                    BlocProvider.of<PagoBloc>(context).add(AddPagoEvent(itemId: widget.allCatalogoData["docId"]));Navigator.of(context).pop();
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Planta agregada al carrito", style: TextStyle(color: Colors.black),), backgroundColor: Colors.green,));
+                                  }, 
+                                  child: Text("Comprar", style: TextStyle(color: Colors.yellow[700]),)),
                                   TextButton(onPressed: ()=>Navigator.of(context).pop(), child: Text("Aceptar", style: TextStyle(color: Colors.yellow[700]),)),
                                 ],
                               );
