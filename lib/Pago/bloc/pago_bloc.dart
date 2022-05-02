@@ -51,7 +51,7 @@ class PagoBloc extends Bloc<PagoEvent, PagoState> {
 
       var docsRef = await queryUser.get();
 
-      DocumentReference<Map<String, dynamic>> doc = await FirebaseFirestore.instance.collection("shop").doc(event.itemId);
+      DocumentReference<Map<String, dynamic>> doc = await FirebaseFirestore.instance.collection("catalogue").doc(event.itemId);
       List<dynamic> carrito = docsRef.data()?["shopListId"];
       carrito.add(doc.id);
       await queryUser.update({"shopListId":carrito});
