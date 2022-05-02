@@ -47,8 +47,14 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.logout, color: Colors.yellow[50],),
             onPressed: () {
               //Log out del usuario
-              BlocProvider.of<AuthBloc>(context).add(SignOutEvent());
-
+              showDialog(context: context, builder: (c)=>AlertDialog(
+                actions: [
+                  TextButton(onPressed: ()=>Navigator.of(context).pop(), child: Text("Cancelar")),
+                  TextButton(onPressed: (){Navigator.of(context).pop();BlocProvider.of<AuthBloc>(context).add(SignOutEvent());}, child: Text("Cerrar sesión")),
+                ],
+                title: Text("Cerrar sesión"),
+                content: Text("Al cerrar sesión será redirigido a la pantalla de inicio, ¿desea continuar?"),)
+              );
             },
           )
         ],
