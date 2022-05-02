@@ -63,6 +63,12 @@ class _PagoState extends State<Pago> {
                                 children: [
                                   Text("${item["title"].toString()}", style: TextStyle(fontSize: 17),),
                                   Text("\$${item["price"].toString()}", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
+                                  IconButton(onPressed: (){
+                                    BlocProvider.of<PagoBloc>(context).add(DeletePagoEvent(itemId: item["docId"]));
+                                  }, 
+                                  icon: Icon(Icons.remove_circle),
+                                  color: Colors.red,
+                                  )
                                 ],
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               ),

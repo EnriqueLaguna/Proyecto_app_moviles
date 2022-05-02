@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:proyecto_app_moviles/Pago/pago.dart';
 
 part 'pago_event.dart';
@@ -69,18 +70,31 @@ class PagoBloc extends Bloc<PagoEvent, PagoState> {
         .doc("${FirebaseAuth.instance.currentUser!.uid}");
 
       var docsRef = await queryUser.get();
-      List<dynamic> listIds = docsRef.data()?["shopListId"] ?? [];
+      List<dynamic> carritoListId = docsRef.data()?["shopListId"];
+
+      List<dynamic> newCarrito = [];
+
+      for(var itemCarrito in carritoListId){
+        if(itemCarrito != event.itemId){
+          newCarrito.add(itemCarrito);
+        }
+      }
+
+      var qDeleteArray = await FirebaseFirestore.instance
+        .collection("users")
+        .doc("${FirebaseAuth.instance.currentUser!.uid}")
+        .update({"shopListId": newCarrito});
 
       var queryFotos = await FirebaseFirestore.instance
-        .collection("shop")
+        .collection("catalogue")
         .get();
 
-      var allMyFotosList = queryFotos.docs
-        .where((element) => listIds.contains(element.id))
+      var carritoList = queryFotos.docs
+        .where((element) => newCarrito.contains(element.id))
         .map((e) => e.data().cast<String, dynamic>()..addAll({"docId":e.id}))
         .toList();
 
-      emit(PagoSuccess(data: allMyFotosList));
+      emit(PagoSuccess(data: carritoList));
     }catch(e){
       emit(PagoError("Error obteniendo los artículos del carrito de su cuenta."));
     }
