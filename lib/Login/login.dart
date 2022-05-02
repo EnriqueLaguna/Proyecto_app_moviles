@@ -19,74 +19,48 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         title: Text('Oxygen To U', style: TextStyle(color: Colors.white),),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: Column(children: [
-          Text("Pagina de inicio", style: TextStyle(fontSize: 40, color: Color.fromRGBO(5, 122, 24, 100))),
-          TextFormField(
-            decoration: InputDecoration(
-              border: borde,
-              enabledBorder: borde,
-              focusedBorder: borde,
-              labelText: "Correo electrónico",
-              floatingLabelStyle: TextStyle(color: Colors.green),
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/loginBackground.jpg"),
+                fit: BoxFit.cover
+              )
             ),
           ),
-          TextFormField(
-            controller: passwordController,
-            obscureText: true,
-            enableSuggestions: false,
-            autocorrect: false,
-            decoration: InputDecoration(
-              border: borde,
-              enabledBorder: borde,
-              focusedBorder: borde,
-              labelText: "Contraseña",
-              //suffix: IconButton(onPressed: (){}, icon: const Icon(Icons.remove_red_eye)),
-              floatingLabelStyle: TextStyle(color: Colors.green),
-            ),
-          ),
-          MaterialButton(
-            onPressed: (){},
-            child: Text("¿No tienes cuenta? Regístrate aquí", style: TextStyle(color: Colors.lightGreen, fontWeight: FontWeight.bold),)
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width*0.75,
-            child: Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
-              ElevatedButton(
-                onPressed: (){}, 
-                child: const ListTile(title: Text("Iniciar Sesión", textAlign: TextAlign.center, style: TextStyle(color: Colors.white),)),
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all(
-                    const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(150),),
-                    )
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10,),
-              TextButton(
-                onPressed: (){
-                  BlocProvider.of<AuthBloc>(context).add(GoogleAuthEvent());
-                },
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: const BorderRadius.all(Radius.circular(150),),
-                      side: BorderSide(color: Theme.of(context).primaryColor,width: 2,style: BorderStyle.solid),
-                    )
-                  ),
-                ),
-                child: const ListTile(
-                  leading: Icon(Icons.g_mobiledata, size: 36,),
-                  title: Text("Iniciar con Google", style: TextStyle(color: Colors.grey), textAlign: TextAlign.start,),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Center(
+                child: Image(
+                  image: AssetImage("assets/images/plant-pot.png"),
+                  height: 300,
+                  width: 300,
                 )
               ),
-            ],),
-          )
+              Center(
+                child: MaterialButton(
+                  hoverColor: Color.fromARGB(255, 17, 61, 18),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.g_mobiledata_outlined, color: Colors.white, size: 40,),
+                      SizedBox(width: 20,),
+                      Text("Iniciar con Google", style: TextStyle(color: Colors.white),),
+                    ],
+                  ),
+                  color: Colors.red,
+                  minWidth: MediaQuery.of(context).size.width - 30,
+                  onPressed: (){
+                    BlocProvider.of<AuthBloc>(context).add(GoogleAuthEvent());
+                  }
+                ),
+              ),
+            ],
+          ),
         ],
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,),
-      ),
+      )
     );
   }
 }
