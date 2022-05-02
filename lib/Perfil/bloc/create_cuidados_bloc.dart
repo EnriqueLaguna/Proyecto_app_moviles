@@ -37,6 +37,7 @@ class CreateCuidadosBloc extends Bloc<CreateCuidadosEvent, CreateCuidadosState> 
       if(_imageUrl != ""){
         dataToSave["picture"] = _imageUrl;
         dataToSave["publishedAt"] = Timestamp.fromDate(DateTime.now());
+        dataToSave["likes"] = 0;
       }else {
         return false;
       }
