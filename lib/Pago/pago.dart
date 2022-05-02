@@ -25,7 +25,14 @@ class _PagoState extends State<Pago> {
       ),
       body: BlocConsumer<PagoBloc, PagoState>(
         listener: (context, state) {
-          
+          if(state is PagoEliminar){
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Elemento eliminado"),
+                backgroundColor: Colors.red,
+              )
+            );
+          }
         },
         builder: (context, state) {
           if(state is PagoError || state is PagoInitial)
@@ -66,7 +73,7 @@ class _PagoState extends State<Pago> {
                                   Container(
                                     width:50,
                                     child: TextFormField(
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: TextInputType.numberWithOptions(signed: false, decimal: false),
                                       initialValue: "1",
                                       onChanged: (inputCantidad){
                                         item["cantidad"] = inputCantidad;
@@ -173,7 +180,11 @@ class _PagoState extends State<Pago> {
                       SizedBox(
                         width: 360,
                         child: ElevatedButton(
-                          onPressed: (){}, 
+                          onPressed: (){
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Compra realizada!", style: TextStyle(color: Colors.black),), backgroundColor: Colors.amber[200],));
+                            BlocProvider.of<PagoBloc>(context).add(ClearPagoEvent());
+                            Navigator.pop(context);
+                          }, 
                           child: const ListTile(title: Text("Realizar pedido", textAlign: TextAlign.center, style: TextStyle(color: Colors.white),)),
                           style: ButtonStyle(
                             
@@ -199,12 +210,11 @@ class _PagoState extends State<Pago> {
   String calcTotal(List<Map<String, dynamic>> data) {
     double r = 0;
     for (var item in data){
-      if(item["cantidad"]!= null && !item["cantidad"].toString().isEmpty){
-        r+=(item["price"] as num) * int.parse(item["cantidad"]);
-      }else{
+      try{
+         r+=(item["price"] as num) * int.parse(item["cantidad"]);
+      }catch(e){
         r+=(item["price"] as num);
       }
-      
     } 
     return r.toString();
   }

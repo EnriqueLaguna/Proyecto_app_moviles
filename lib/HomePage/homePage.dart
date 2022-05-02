@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('Proyecto Móviles', style: TextStyle(color: Colors.yellow[50]),),
+        title: Text('Oxygen to U', style: TextStyle(color: Colors.yellow[50]),),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.logout, color: Colors.yellow[50],),
@@ -60,13 +60,14 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        tooltip: "Carrito",
         onPressed: (){
           BlocProvider.of<PagoBloc>(context).add(GetPagoEvent());
           Navigator.push(
             context, 
             MaterialPageRoute(builder: (context) => Pago()));
         },
-        child: Icon(Icons.yard),
+        child: Icon(Icons.yard, color: Colors.lightGreen[50],),
       ),
       body: IndexedStack(
         index: _currentPageIndex,

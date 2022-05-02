@@ -55,10 +55,10 @@ class _ItemCatalogoState extends State<ItemCatalogo> {
                                 actions: [
                                   TextButton(onPressed: (){
                                     BlocProvider.of<PagoBloc>(context).add(AddPagoEvent(itemId: widget.allCatalogoData["docId"]));Navigator.of(context).pop();
-                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Planta agregada al carrito", style: TextStyle(color: Colors.black),), backgroundColor: Colors.green,));
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Planta agregada al carrito", style: TextStyle(color: Colors.black),), backgroundColor: Colors.lightGreen,));
                                   }, 
                                   child: Text("Comprar", style: TextStyle(color: Colors.yellow[700]),)),
-                                  TextButton(onPressed: ()=>Navigator.of(context).pop(), child: Text("Aceptar", style: TextStyle(color: Colors.yellow[700]),)),
+                                  TextButton(onPressed: ()=>Navigator.of(context).pop(), child: Text("Cerrar", style: TextStyle(color: Colors.yellow[700]),)),
                                 ],
                               );
                             }

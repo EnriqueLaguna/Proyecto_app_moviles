@@ -94,6 +94,7 @@ class PagoBloc extends Bloc<PagoEvent, PagoState> {
         .map((e) => e.data().cast<String, dynamic>()..addAll({"docId":e.id}))
         .toList();
 
+      emit(PagoEliminar());
       emit(PagoSuccess(data: carritoList));
     }catch(e){
       emit(PagoError("Error obteniendo los artículos del carrito de su cuenta."));
@@ -108,18 +109,16 @@ class PagoBloc extends Bloc<PagoEvent, PagoState> {
         .doc("${FirebaseAuth.instance.currentUser!.uid}");
 
       var docsRef = await queryUser.get();
-      List<dynamic> listIds = docsRef.data()?["shopListId"] ?? [];
+      List<dynamic> listIds = docsRef.data()?["shopListId"];
 
-      var queryFotos = await FirebaseFirestore.instance
-        .collection("shop")
-        .get();
+      List<dynamic> carritoVacio = [];
 
-      var allMyFotosList = queryFotos.docs
-        .where((element) => listIds.contains(element.id))
-        .map((e) => e.data().cast<String, dynamic>()..addAll({"docId":e.id}))
-        .toList();
+      var qDeleteArray = await FirebaseFirestore.instance
+        .collection("users")
+        .doc("${FirebaseAuth.instance.currentUser!.uid}")
+        .update({"shopListId": carritoVacio});
 
-      emit(PagoSuccess(data: allMyFotosList));
+      emit(PagoSuccess(data: []));
     }catch(e){
       emit(PagoError("Error obteniendo los artículos del carrito de su cuenta."));
     }

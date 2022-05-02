@@ -23,3 +23,7 @@ class PagoError extends PagoState {
   @override
   List<Object> get props => [this.msg];
 }
+
+class PagoEliminar extends PagoState{
+
+}
