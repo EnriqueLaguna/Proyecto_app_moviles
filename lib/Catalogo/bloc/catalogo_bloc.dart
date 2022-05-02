@@ -14,7 +14,7 @@ class CatalogoBloc extends Bloc<CatalogoEvent, CatalogoState> {
   FutureOr<void> getCatalog(event, emit) async{
     try {
       var allDocs = await FirebaseFirestore.instance.collection("catalogue").get();
-      List<Map<String, dynamic>> data = allDocs.docs.where((doc) => doc["public"]).map((e) => e.data()).toList();
+      List<Map<String, dynamic>> data = allDocs.docs.where((doc) => doc["public"]).map((e) => e.data()..addAll({"docId": e.id})).toList();
       emit(CatalogoSuccess(data: data));
     } catch (e) {
       emit(CatalogoError());

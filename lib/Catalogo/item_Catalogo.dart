@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:proyecto_app_moviles/Pago/bloc/pago_bloc.dart';
 
 class ItemCatalogo extends StatefulWidget {
   final Map<String, dynamic> allCatalogoData;
@@ -51,7 +53,7 @@ class _ItemCatalogoState extends State<ItemCatalogo> {
                                 ),
                                 content: Text(widget.allCatalogoData["description"].toString()),
                                 actions: [
-                                  TextButton(onPressed: ()=>Navigator.of(context).pop(), child: Text("Comprar", style: TextStyle(color: Colors.yellow[700]),)),
+                                  TextButton(onPressed: (){BlocProvider.of<PagoBloc>(context).add(AddPagoEvent(itemId: widget.allCatalogoData["docId"]));Navigator.of(context).pop();}, child: Text("Comprar", style: TextStyle(color: Colors.yellow[700]),)),
                                   TextButton(onPressed: ()=>Navigator.of(context).pop(), child: Text("Aceptar", style: TextStyle(color: Colors.yellow[700]),)),
                                 ],
                               );

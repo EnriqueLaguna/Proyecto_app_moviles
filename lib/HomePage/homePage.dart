@@ -5,6 +5,7 @@ import 'package:proyecto_app_moviles/Cuidados/cuidado.dart';
 import 'package:proyecto_app_moviles/HomePage/inicio.dart';
 import 'package:proyecto_app_moviles/Login/auth/bloc/auth_bloc.dart';
 import 'package:proyecto_app_moviles/Mapa/mapa.dart';
+import 'package:proyecto_app_moviles/Pago/bloc/pago_bloc.dart';
 import 'package:proyecto_app_moviles/Pago/pago.dart';
 import 'package:proyecto_app_moviles/Perfil/perfPage.dart';
 import 'package:proyecto_app_moviles/iconos.dart';
@@ -54,6 +55,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
+          BlocProvider.of<PagoBloc>(context).add(GetPagoEvent());
           Navigator.push(
             context, 
             MaterialPageRoute(builder: (context) => Pago()));
