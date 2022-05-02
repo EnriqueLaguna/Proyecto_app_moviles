@@ -24,8 +24,7 @@ class _HomePageState extends State<HomePage> {
     Catalogo(),
     CuidadosPage(),
     Perfil(),
-    Pago(),
-    Mapa()
+    Mapa(),
   ];
 
   final _namePageList = [
@@ -33,7 +32,6 @@ class _HomePageState extends State<HomePage> {
     "Catálogo",
     "Cuidados",
     "Mi perfil",
-    "Mi carrito",
     "Rastreo"
   ];
 
@@ -53,6 +51,14 @@ class _HomePageState extends State<HomePage> {
             },
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(
+            context, 
+            MaterialPageRoute(builder: (context) => Pago()));
+        },
+        child: Icon(Icons.yard),
       ),
       body: IndexedStack(
         index: _currentPageIndex,
@@ -87,10 +93,6 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             label: _namePageList[4],
-            icon: Icon(Icons.shopping_cart),
-          ),
-          BottomNavigationBarItem(
-            label: _namePageList[5],
             icon: Icon(Icons.map),
           ),
         ],
