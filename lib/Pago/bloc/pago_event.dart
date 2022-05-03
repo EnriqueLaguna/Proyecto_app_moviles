@@ -22,4 +22,9 @@ class DeletePagoEvent extends PagoEvent{
   @override
   List<Object> get props => [this.itemId];
 }
-class ClearPagoEvent extends PagoEvent{}
+class ClearPagoEvent extends PagoEvent{
+  final double total;
+  ClearPagoEvent({required this.total});
+  @override
+  List<Object> get props => [this.total];
+}

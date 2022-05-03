@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:proyecto_app_moviles/Pago/pago.dart';
+import 'package:geolocator/geolocator.dart';
 
 part 'pago_event.dart';
 part 'pago_state.dart';
@@ -117,6 +118,14 @@ class PagoBloc extends Bloc<PagoEvent, PagoState> {
         .collection("users")
         .doc("${FirebaseAuth.instance.currentUser!.uid}")
         .update({"shopListId": carritoVacio});
+
+      //Get current position
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+      //Get total
+      event.total;
+
+      //Agregar el doc en la nueva coleccion
+
 
       emit(PagoSuccess(data: []));
     }catch(e){

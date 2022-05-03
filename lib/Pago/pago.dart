@@ -182,7 +182,7 @@ class _PagoState extends State<Pago> {
                         child: ElevatedButton(
                           onPressed: (){
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Compra realizada!", style: TextStyle(color: Colors.black),), backgroundColor: Colors.amber[200],));
-                            BlocProvider.of<PagoBloc>(context).add(ClearPagoEvent());
+                            BlocProvider.of<PagoBloc>(context).add(ClearPagoEvent(total: total));
                             Navigator.pop(context);
                           }, 
                           child: const ListTile(title: Text("Realizar pedido", textAlign: TextAlign.center, style: TextStyle(color: Colors.white),)),

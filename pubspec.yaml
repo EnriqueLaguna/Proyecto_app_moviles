@@ -23,7 +23,10 @@ dependencies:
   firebase_storage:
   image_picker: ^0.8.4+11
 
-  flutter_facebook_auth: ^4.3.0
+  geolocator:
+  geocoding:
+  flutter_polyline_points: ^0.2.6
+  google_maps_flutter: ^2.0.2
 
 dev_dependencies:
   flutter_test:
@@ -42,4 +45,3 @@ flutter:
     - family: Iconos
       fonts:
         - asset: assets/fonts/Iconos.ttf
-                       
