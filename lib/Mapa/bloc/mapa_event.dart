@@ -6,3 +6,10 @@ abstract class MapaEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+class DeletePedidoEvent extends MapaEvent{
+  final String itemId;
+
+  DeletePedidoEvent({required this.itemId});
+  @override
+  List<Object> get props => [this.itemId];
+}

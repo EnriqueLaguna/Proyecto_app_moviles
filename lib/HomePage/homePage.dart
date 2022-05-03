@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto_app_moviles/Catalogo/catalogo.dart';
 import 'package:proyecto_app_moviles/Cuidados/cuidado.dart';
-import 'package:proyecto_app_moviles/HomePage/inicio.dart';
 import 'package:proyecto_app_moviles/Login/auth/bloc/auth_bloc.dart';
 import 'package:proyecto_app_moviles/Mapa/mapa.dart';
 import 'package:proyecto_app_moviles/Pago/bloc/pago_bloc.dart';
@@ -84,7 +83,7 @@ class _HomePageState extends State<HomePage> {
         items: [
           BottomNavigationBarItem(
             label: _namePageList[0],
-            icon: Icon(Icons.search),
+            icon: Icon(Iconos.flor),
           ),
           BottomNavigationBarItem(
             label: _namePageList[1],

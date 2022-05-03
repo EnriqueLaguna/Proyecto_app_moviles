@@ -27,7 +27,7 @@ class _CatalogoState extends State<Catalogo> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
-            "Catalogo de plantas",
+            "Catálogo de plantas",
             style: TextStyle(
                 color: Colors.lightGreen,
                 fontSize: 24,

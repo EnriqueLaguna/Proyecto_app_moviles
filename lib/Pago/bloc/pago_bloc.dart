@@ -139,6 +139,7 @@ class PagoBloc extends Bloc<PagoEvent, PagoState> {
         "price": total,
         "location": GeoPoint(event.ubicacion.latitude, event.ubicacion.longitude),
         "shipElements": shippingElements,
+        "buyer": FirebaseAuth.instance.currentUser!.uid,
       };
 
       //Agregar el doc en la nueva coleccion

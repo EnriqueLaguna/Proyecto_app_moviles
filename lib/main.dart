@@ -6,6 +6,7 @@ import 'package:proyecto_app_moviles/HomePage/homePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:proyecto_app_moviles/Login/auth/bloc/auth_bloc.dart';
 import 'package:proyecto_app_moviles/Login/login.dart';
+import 'package:proyecto_app_moviles/Mapa/bloc/mapa_bloc.dart';
 import 'package:proyecto_app_moviles/Pago/bloc/pago_bloc.dart';
 import 'package:proyecto_app_moviles/Perfil/Edit_Catalogo/bloc/editcatalogo_bloc.dart';
 import 'package:proyecto_app_moviles/Perfil/Edit_Cuidados/bloc/editcuidados_bloc.dart';
@@ -41,6 +42,9 @@ void main() async {
         ),
         BlocProvider(
           create: (context) => PagoBloc()
+        ),
+        BlocProvider(
+          create: (context) => MapaBloc()
         ),
       ], 
       child: MyApp()

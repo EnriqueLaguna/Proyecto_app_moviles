@@ -8,3 +8,5 @@ abstract class MapaState extends Equatable {
 }
 
 class MapaInitial extends MapaState {}
+class MapaSuccess extends MapaState {}
+class MapaError extends MapaState {}

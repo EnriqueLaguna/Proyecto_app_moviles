@@ -1,8 +1,13 @@
-import 'dart:async';
+import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutterfire_ui/firestore.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:proyecto_app_moviles/Mapa/bloc/mapa_bloc.dart';
+import 'package:proyecto_app_moviles/Pago/bloc/pago_bloc.dart';
 
 class Mapa extends StatefulWidget {
   Mapa({Key? key}) : super(key: key);
@@ -12,158 +17,69 @@ class Mapa extends StatefulWidget {
 }
 
 class _MapaState extends State<Mapa> {
-
-  late GoogleMapController mapController;
-
-  final LatLng _center = const LatLng(45.521563, -122.677433);
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
-
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Container(
-              margin: EdgeInsets.all(8.0),
-              width: 60.0,
-              height: 60.0,
-              decoration: new BoxDecoration(
-                shape: BoxShape.circle,
-                image: new DecorationImage(
-                  fit: BoxFit.fill,
-                  image: new NetworkImage(
-                    "https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=20.67517&lon=-103.34733&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*")
-                )
-              )
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 300.0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(style: TextButton.styleFrom(textStyle: TextStyle(fontSize: 18),),
-                      onPressed: () {
-                        showDialog(context: context, builder: (BuildContext context){
-                          return AlertDialog(
-                            title: Text("Pedido 1"),
-                            content: Container(
-                              height: 450,
-                              width: 300,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Cactus silvetre x2"),
-                                  Text("Eucalipto x3"),
-                                  SizedBox(height: 100.0),
-                                  Image.network("https://appassets.mvtdev.com/map/48/l/5996/27891507/4647843.jpg")
-                                ],
-                              ),
-                            ),
-                            actions: [
-                              ElevatedButton(onPressed: (){
-                                Navigator.of(context).pop();
-                              },
-                              child: Text("Cerrar")),
-                            ],
-                          );
-                        });
-                      },
-                      child: Text("Pedido 1",style: TextStyle(color: Colors.black),),
-                      ),
-                      Text("En camino", style: TextStyle(fontSize: 15),),
-                    ],
+    int index = 0;
+    return FirestoreListView(
+      query: FirebaseFirestore.instance.collection("shippings").where("buyer", isEqualTo: FirebaseAuth.instance.currentUser!.uid),
+      itemBuilder: (context, doc){
+        ++index;
+        return GestureDetector(
+          onTap: () {
+            showDialog(context: context, builder: (BuildContext context){
+              return AlertDialog(
+                title: Text("Pedido ${index}"),
+                content: Container(
+                  height: 200,
+                  width: 300,
+                  child: ListView.builder(
+                    itemCount: doc["shipElements"].length,
+                    itemBuilder: (BuildContext context, int index) {
+                      var element = doc["shipElements"][index];
+                      return ListTile(
+                        title: Text(element["title"].toString()),
+                        subtitle: Text("${element["seller"].toString()}"),
+                        trailing: Column(
+                          children: [
+                            Text("\$${element["price"].toString()}", style: TextStyle(fontWeight: FontWeight.bold),),
+                            Text("x"+((element["cantidad"]==null)?"1":element["cantidad"].toString()))
+                          ],mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.end,
+                        ),
+                      );
+                    },
                   ),
                 ),
-                SizedBox(height: 5.0),
-                Text("Entregar a <dirección>", style: TextStyle(fontSize: 18, color: Colors.grey.shade500),),
-                SizedBox(height: 15.0),
-                LinearPercentIndicator(
-                  width: 300.0,
-                  lineHeight: 6.0,
-                  percent: 0.75,
-                  progressColor: Colors.lightGreen,
-                ),
-              ],
-            )
-          ],
-        ),
-        SizedBox(height: 5.0),
-        Row(
-          children: [
-            Container(
-              margin: EdgeInsets.all(8.0),
-              width: 60.0,
-              height: 60.0,
-              decoration: new BoxDecoration(
-                shape: BoxShape.circle,
-                image: new DecorationImage(
-                  fit: BoxFit.fill,
-                  image: new NetworkImage(
-                    "https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=20.67517&lon=-103.34733&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*")
-                )
-              )
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 300.0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(style: TextButton.styleFrom(textStyle: TextStyle(fontSize: 18),),
-                      onPressed: () {
-                        showDialog(context: context, builder: (BuildContext context){
-                          return AlertDialog(
-                            title: Text("Pedido 2"),
-                            content: Container(
-                              height: 450,
-                              width: 300,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Cactus silvetre x2"),
-                                  Text("Eucalipto x3"),
-                                ],
-                              ),
-                            ),
-                            actions: [
-                              ElevatedButton(onPressed: (){
-                                Navigator.of(context).pop();
-                              },
-                              child: Text("Cerrar")),
-                            ],
-                          );
-                        });
-                      },
-                      child: Text("Pedido 2",style: TextStyle(color: Colors.black),),
-                      ),
-                      Text("Completado", style: TextStyle(fontSize: 15),),
-                    ],
+                actions: [
+                  TextButton(
+                    onPressed: (){
+                      BlocProvider.of<MapaBloc>(context).add(DeletePedidoEvent(itemId: doc.id));
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("Confirmar recepción", style: TextStyle(color: Colors.yellow[700]),)
                   ),
-                ),
-                SizedBox(height: 5.0),
-                Text("Entregar a <dirección>", style: TextStyle(fontSize: 18, color: Colors.grey.shade500),),
-                SizedBox(height: 15.0),
-                LinearPercentIndicator(
-                  width: 300.0,
-                  lineHeight: 6.0,
-                  percent: 1.0,
-                  progressColor: Colors.lightGreen,
-                ),
-              ],
-            )
-          ],
-        ),
-      ],
+                  TextButton(
+                    onPressed: (){Navigator.of(context).pop();},
+                    child: Text("Aceptar", style: TextStyle(color: Colors.yellow[700]),)
+                  ),
+                ],
+              );
+            });
+          },
+          child: ListTile(
+            title: Text("Pedido ${index}"),
+            trailing: Text("\$${(doc["price"] as double).toStringAsFixed(2)}"),
+            subtitle: LinearPercentIndicator(
+              lineHeight: 6.0,
+              percent: Random().nextDouble(),
+              progressColor: Colors.lightGreen,
+            ),
+            leading: CircleAvatar(
+              radius: 24,
+              backgroundImage: NetworkImage("https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=20.67517&lon=-103.34733&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*"),
+            ),
+          ),
+        );
+      }
     );
   }
 }
