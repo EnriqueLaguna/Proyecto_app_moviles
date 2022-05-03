@@ -185,8 +185,12 @@ class _PagoState extends State<Pago> {
                         width: 360,
                         child: ElevatedButton(
                           onPressed: pos==null||data.isEmpty?null:(){
+                            setState(() {
+                              
+                            });
+                            String totalS = calcTotal(data);
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Compra realizada!", style: TextStyle(color: Colors.black),), backgroundColor: Colors.amber[200],));
-                            BlocProvider.of<PagoBloc>(context).add(ClearPagoEvent(total: total));
+                            BlocProvider.of<PagoBloc>(context).add(ClearPagoEvent(total: totalS, ubicacion: pos!, data: data));
                             Navigator.pop(context);
                           }, 
                           child: const ListTile(title: Text("Realizar pedido", textAlign: TextAlign.center, style: TextStyle(color: Colors.white),)),

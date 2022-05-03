@@ -23,8 +23,11 @@ class DeletePagoEvent extends PagoEvent{
   List<Object> get props => [this.itemId];
 }
 class ClearPagoEvent extends PagoEvent{
-  final double total;
-  ClearPagoEvent({required this.total});
+  final String total;
+  final LatLng ubicacion;
+  final List<Map<String, dynamic>> data;
+
+  ClearPagoEvent({required this.total, required this.ubicacion, required this.data});
   @override
-  List<Object> get props => [this.total];
+  List<Object> get props => [this.total, this.ubicacion, this.data];
 }

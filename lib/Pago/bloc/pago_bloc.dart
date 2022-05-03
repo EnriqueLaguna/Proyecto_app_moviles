@@ -3,7 +3,9 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:proyecto_app_moviles/Pago/pago.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -119,14 +121,44 @@ class PagoBloc extends Bloc<PagoEvent, PagoState> {
         .doc("${FirebaseAuth.instance.currentUser!.uid}")
         .update({"shopListId": carritoVacio});
 
-      //Get current position
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
-      //Get total
-      event.total;
+      //Cambiar tipo de datos
+      double total = double.parse(event.total);
+
+      // print(event.data);
+      // Elemento que sera insertado
+      List<Map<String, dynamic>> shippingElements = [];
+      for(var item in event.data){
+        item.remove("docId");
+        item.remove("public");
+        item.remove("publishedAt");
+        item.remove("picture");
+        shippingElements.add(item);
+      }
+
+      Map<String, dynamic> newShippingItem = {
+        "price": total,
+        "location": GeoPoint(event.ubicacion.latitude, event.ubicacion.longitude),
+        "shipElements": shippingElements,
+      };
 
       //Agregar el doc en la nueva coleccion
+      var newDocRefs = await FirebaseFirestore.instance
+        .collection("shippings")
+        .add(newShippingItem);
 
+      //Actualizar el arreglo del usuario
+      var shippingQueryUser = await FirebaseFirestore.instance
+        .collection("users")
+        .doc("${FirebaseAuth.instance.currentUser!.uid}");
+      
+      var userDocRefs = await shippingQueryUser.get();
+      List<dynamic> shipListIds = userDocRefs.data()?["shippingListId"];
 
+      //Agregar el id del elemento nuevo
+      shipListIds.add(newDocRefs.id);
+
+      //Actualizar el arreglo del usuario
+      await shippingQueryUser.update({"shippingListId": shipListIds});
       emit(PagoSuccess(data: []));
     }catch(e){
       emit(PagoError("Error obteniendo los artículos del carrito de su cuenta."));
