@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:proyecto_app_moviles/Perfil/Edit_Catalogo/bloc/editcatalogo_bloc.dart';
 
 import 'package:proyecto_app_moviles/Perfil/Edit_Catalogo/item_Catalogo_edit.dart';
 
@@ -38,29 +40,46 @@ class _ItemCatalogoState extends State<ItemCatalogo> {
                         fit: BoxFit.cover,
                       ),
                       Spacer(),
-                      MaterialButton(
-                        color: Colors.lightGreen,
-                        child: Text("Editar"),
-                        onPressed:(){
-                          //Obtener la infomacion de la imagen que editare. Necesito el Doc
-                          String dataToEdit = widget.allCatalogoData["docId"];
-                          bool switchValue = widget.allCatalogoData["public"];
-                          //print(dataToEdit);
-                          //BlocProvider.of<MisfotosBloc>(context).add(OnClickEditarButtonEvent(dataToEdit: dataToEdit));
-                          //Usar Navigation.push
-                          Navigator.push(
-                            context, 
-                            MaterialPageRoute(builder: (context) => MiCatalogoEdit(
-                              docIdString: dataToEdit, 
-                              switchCurrentValue:switchValue,
-                              currentImage: widget.allCatalogoData["picture"],
-                              currentName: widget.allCatalogoData["title"],
-                              currentDescription: widget.allCatalogoData["description"],
-                              currentPrice: widget.allCatalogoData["price"],
-                            ))
-                          );
-                        }
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          MaterialButton(
+                            minWidth: 50,
+                            color: Colors.lightGreen,
+                            child: Text("Editar"),
+                            onPressed:(){
+                              //Obtener la infomacion de la imagen que editare. Necesito el Doc
+                              String dataToEdit = widget.allCatalogoData["docId"];
+                              bool switchValue = widget.allCatalogoData["public"];
+                              //print(dataToEdit);
+                              //BlocProvider.of<MisfotosBloc>(context).add(OnClickEditarButtonEvent(dataToEdit: dataToEdit));
+                              //Usar Navigation.push
+                              Navigator.push(
+                                context, 
+                                MaterialPageRoute(builder: (context) => MiCatalogoEdit(
+                                  docIdString: dataToEdit, 
+                                  switchCurrentValue:switchValue,
+                                  currentImage: widget.allCatalogoData["picture"],
+                                  currentName: widget.allCatalogoData["title"],
+                                  currentDescription: widget.allCatalogoData["description"],
+                                  currentPrice: widget.allCatalogoData["price"],
+                                ))
+                              );
+                            }
+                          ),
+                          MaterialButton(
+                            minWidth: 50,
+                            color: Colors.red[800] ,
+                            child: Text("Borrar"),
+                            onPressed: (){
+                              String idDataToDelete = widget.allCatalogoData["docId"];
+                              BlocProvider.of<EditcatalogoBloc>(context).add(OnDeleteItemEvent(id:idDataToDelete));
+                            },
+                            
+                          )
+                        ],
                       ),
+                      
                     ],
                   ),
                 ]

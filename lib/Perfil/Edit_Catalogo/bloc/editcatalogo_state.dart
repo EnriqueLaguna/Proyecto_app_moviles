@@ -34,4 +34,6 @@ class EditCatalogoLoadingState extends EditcatalogoState{}
 
 class EditCatalogoSuccessState extends EditcatalogoState{}
 
+class DeleteItemCatalogoSuccess extends EditcatalogoState{}
+
 class EditErrorState extends EditcatalogoState{}

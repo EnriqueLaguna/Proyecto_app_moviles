@@ -18,6 +18,7 @@ class EditcatalogoBloc extends Bloc<EditcatalogoEvent, EditcatalogoState> {
     on<GetAllMyDataEvent>(_getAllMyData);
     on<OnEditTakePictureEvent>(_takePicture);
     on<OnEditSaveDataEvent>(_saveEditData);
+    on<OnDeleteItemEvent>(_deleteItem);
   }
 
   FutureOr<void> _getAllMyData(event, emit) async {
@@ -158,6 +159,61 @@ class EditcatalogoBloc extends Bloc<EditcatalogoEvent, EditcatalogoState> {
     }catch(e){
       return "";
     }
+  }
+
+  Future<void> _deleteItem(OnDeleteItemEvent event, Emitter emit) async {
+    emit(EditCatalogoLoadingState());
+    try{
+        //ID of delete item
+      String idDoc = event.id;
+
+      // Get all items in user's array 
+      var queryUser = await FirebaseFirestore.instance
+        .collection("users")
+        .doc("${FirebaseAuth.instance.currentUser!.uid}");
+
+      var docsRef = await queryUser.get();
+      List<dynamic> catalogoListIds = docsRef.data()?["catalogueListId"];
+
+      List<dynamic> newCatalogoListIds = [];
+
+      // Remove item to delete from the array
+      for(var id in catalogoListIds){
+        if(id != idDoc){
+          newCatalogoListIds.add(id);
+        }
+      }
+
+      //Update new array to the user
+      await FirebaseFirestore.instance
+        .collection("users")
+        .doc("${FirebaseAuth.instance.currentUser!.uid}")
+        .update({"catalogueListId":newCatalogoListIds});
+
+      //Delete the doc from catalogue collection
+      await FirebaseFirestore.instance
+        .collection("catalogue")
+        .doc(idDoc)
+        .delete();
+
+      //Get the list again
+      var queryFotos = await FirebaseFirestore.instance
+      .collection("catalogue")
+      .get();
+
+    var allMyCatalogueList = queryFotos.docs
+      .where((element) => newCatalogoListIds.contains(element.id))
+      .map((e) => e.data().cast<String, dynamic>()..addAll({"docId":e.id}))
+      .toList();
+
+      emit(EditCatalogoSuccessState());
+      emit(EditCatalogoSuccess(EditData: allMyCatalogueList));
+    }catch(e){
+      print("Error al borrar elemento: ${e}");
+      emit(EditCatalogoError());
+    }
+    
+
   }
 
 }

@@ -28,3 +28,10 @@ class OnEditSaveDataEvent extends EditcatalogoEvent{
   @override
   List<Object> get props => [dataToSaveEdit];
 }
+
+class OnDeleteItemEvent extends EditcatalogoEvent{
+  final String id;
+  OnDeleteItemEvent({required this.id});
+  @override
+  List<Object> get props => [id];
+}
