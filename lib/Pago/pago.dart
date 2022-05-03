@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:proyecto_app_moviles/Mapa/place_marker_page.dart';
 import 'package:proyecto_app_moviles/Pago/bloc/pago_bloc.dart';
 
 class Pago extends StatefulWidget {
@@ -11,6 +13,7 @@ class Pago extends StatefulWidget {
 
 class _PagoState extends State<Pago> {
   double total = 0;
+  LatLng? pos;
 
   @override
   void initState() {
@@ -137,7 +140,7 @@ class _PagoState extends State<Pago> {
                                     ),
                                   ],
                                 ),
-                                Icon(Icons.edit),
+                                // Icon(Icons.edit),
                               ],
                             ),
                             SizedBox(height: 10),
@@ -158,15 +161,16 @@ class _PagoState extends State<Pago> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text("Dirección", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.person_pin_circle_rounded),
-                                        Text("López Mateos 1561", style: TextStyle(fontSize: 18, color: Colors.grey.shade700),),
-                                      ],
-                                    ),
+                                    if(pos==null) Text("Dirección no especificada", style: TextStyle(color: Colors.red[700]),)
+                                    else Text("Dirección establecida", style: TextStyle(color: Colors.green[700]),)
                                   ],
                                 ),
-                                Icon(Icons.edit),
+                                IconButton(
+                                  onPressed: (){
+                                    Navigator.of(context).push(MaterialPageRoute(builder: ((context) => PlaceMarkerPage(setLocation: setLocation))));
+                                  },
+                                  icon: Icon(Icons.edit)
+                                ),
                               ],
                             ),
                             SizedBox(height: 10),
@@ -180,7 +184,7 @@ class _PagoState extends State<Pago> {
                       SizedBox(
                         width: 360,
                         child: ElevatedButton(
-                          onPressed: (){
+                          onPressed: pos==null||data.isEmpty?null:(){
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Compra realizada!", style: TextStyle(color: Colors.black),), backgroundColor: Colors.amber[200],));
                             BlocProvider.of<PagoBloc>(context).add(ClearPagoEvent(total: total));
                             Navigator.pop(context);
@@ -205,6 +209,10 @@ class _PagoState extends State<Pago> {
         },
       ),
     );
+  }
+
+  void setLocation(LatLng position){
+    setState(() {pos=position;});
   }
 
   String calcTotal(List<Map<String, dynamic>> data) {

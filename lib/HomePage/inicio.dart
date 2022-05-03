@@ -14,7 +14,7 @@ class _InicioState extends State<Inicio> {
       children: [
         Container(
           margin: EdgeInsets.only(top: 15.0, bottom: 15.0),
-          child: Text("Pagina Principal", style: TextStyle(color: Colors.black, fontSize: 25,))
+          child: Text("Página Principal", style: TextStyle(color: Colors.black, fontSize: 25,))
         ),
         Container(
           margin: EdgeInsets.only(top: 15.0, bottom: 15.0),
