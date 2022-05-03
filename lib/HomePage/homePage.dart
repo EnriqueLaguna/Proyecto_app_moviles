@@ -21,7 +21,6 @@ class _HomePageState extends State<HomePage> {
 
   int _currentPageIndex = 0;
   final _pageList = <Widget>[
-    Inicio(),
     Catalogo(),
     CuidadosPage(),
     Perfil(),
@@ -29,7 +28,6 @@ class _HomePageState extends State<HomePage> {
   ];
 
   final _namePageList = [
-    "Inicio",
     "Catálogo",
     "Cuidados",
     "Mi perfil",
@@ -86,22 +84,18 @@ class _HomePageState extends State<HomePage> {
         items: [
           BottomNavigationBarItem(
             label: _namePageList[0],
-            icon: Icon(Iconos.flor,),
-          ),
-          BottomNavigationBarItem(
-            label: _namePageList[1],
             icon: Icon(Icons.search),
           ),
           BottomNavigationBarItem(
-            label: _namePageList[2],
+            label: _namePageList[1],
             icon: Icon(Icons.warning),
           ),
           BottomNavigationBarItem(
-            label: _namePageList[3],
+            label: _namePageList[2],
             icon: Icon(Icons.person),
           ),
           BottomNavigationBarItem(
-            label: _namePageList[4],
+            label: _namePageList[3],
             icon: Icon(Icons.map),
           ),
         ],
