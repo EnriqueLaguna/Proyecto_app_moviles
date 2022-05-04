@@ -60,7 +60,7 @@ class _MapaState extends State<Mapa> {
                   TextButton(
                     onPressed: (){
                       BlocProvider.of<MapaBloc>(context).add(DeletePedidoEvent(itemId: doc.id));
-                      index--;
+                      index = 0;
                       Navigator.of(context).pop();
                     },
                     child: Text("Confirmar recepción", style: TextStyle(color: Colors.yellow[700]),)

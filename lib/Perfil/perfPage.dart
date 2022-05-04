@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto_app_moviles/Perfil/Edit_Catalogo/bloc/editcatalogo_bloc.dart';
 import 'package:proyecto_app_moviles/Perfil/create_catalogo_item.dart';
@@ -23,79 +24,84 @@ class _PerfilState extends State<Perfil> {
     return Center(
       child: Column(
         children: [
-          SizedBox(height: 16,),
-          CircleAvatar(
-            foregroundImage: NetworkImage(user.photoURL.toString()),
-            radius: 64,
-          ),
-          SizedBox(height: 16,),
-          Text(user.displayName.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
-          SizedBox(height: 8,),
-          Text(user.email.toString(), style: TextStyle(color: Colors.grey),),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            // height: MediaQuery.of(context).size.height *.3,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/perfil_background.jpg"),
+                fit: BoxFit.cover
 
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+              )
+            ),
             child: Column(
               children: [
-                MaterialButton(
-                  color: Colors.lightGreen,
-                  child: Text("Agregar planta al catálogo"),
-                  onPressed: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) => CreateCatalogoItem())
-                      )
-                    );
-                  },
+                SizedBox(height: 16,),
+                CircleAvatar(
+                  foregroundImage: NetworkImage(user.photoURL.toString()),
+                  radius: 64,
                 ),
-                MaterialButton(
-                  color: Colors.yellowAccent,
-                  child: Text("Ver mi catálogo"),
-                  onPressed: (){
-                    BlocProvider.of<EditcatalogoBloc>(context).add(GetAllMyDataEvent());
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) => ShowCatalogoItem())
-                      )
-                    );
-                  },
-                ),
+                SizedBox(height: 16,),
+                Text(user.displayName.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
+                SizedBox(height: 8,),
+                Text(user.email.toString(), style: TextStyle(color: Colors.black54),),
               ],
             ),
           ),
-
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                MaterialButton(
-                  color: Colors.lightGreen,
-                  child: Text("Crear nuevo tip de cuidado"),
-                  onPressed: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) => CreateCuidadosItem())
-                      )
-                    );
-                  },
+          GestureDetector(
+            onTap: (){
+              BlocProvider.of<EditcatalogoBloc>(context).add(GetAllMyDataEvent());
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: ((context) => ShowCatalogoItem())
+                )
+              );
+            },
+            child:
+              Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/catalogo_backGround.jpg"),
+                    fit: BoxFit.cover,
+                    colorFilter:ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.darken),
+                  )
                 ),
-                MaterialButton(
-                  color: Colors.yellowAccent,
-                  child: Text("Ver mis tips de cuidado"),
-                  onPressed: (){
-                    BlocProvider.of<EditcuidadosBloc>(context).add(GetAllMyDataEventCuidados());
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) => ShowCuidadosItem())
-                      )
-                    );
-                  },
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * .2527,              
+                child: Center(
+                  child: Container(
+                    child: Text("Mi catalogo", style: TextStyle(color: Colors.white70, fontSize: 40, fontStyle: FontStyle.italic,),),
+                  ),
                 ),
-              ],
+              ),
+              
+          ),
+          GestureDetector(
+            onTap: (){
+              BlocProvider.of<EditcuidadosBloc>(context).add(GetAllMyDataEventCuidados());
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: ((context) => ShowCuidadosItem())
+                )
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/cuidado_backGround.jpeg"),
+                  fit: BoxFit.cover,
+                  colorFilter:ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.darken),
+                )
+              ),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * .2527,
+              child: Center(
+                  child: Container(
+                    child: Text("Mis tips", style: TextStyle(color: Colors.white70, fontSize: 40, fontStyle: FontStyle.italic,),),
+                  ),
+                ),
             ),
           ),
         ],
@@ -103,3 +109,29 @@ class _PerfilState extends State<Perfil> {
     );
   }
 }
+
+// MaterialButton(
+//   color: Colors.lightGreen,
+//   child: Text("Crear nuevo tip de cuidado"),
+//   onPressed: (){
+//     Navigator.push(
+//       context,
+//       MaterialPageRoute(
+//         builder: ((context) => CreateCuidadosItem())
+//       )
+//     );
+//   },
+// ),
+
+// MaterialButton(
+//   color: Colors.lightGreen,
+//   child: Text("Agregar planta al catálogo"),
+//   onPressed: (){
+//     Navigator.push(
+//       context,
+//       MaterialPageRoute(
+//         builder: ((context) => CreateCatalogoItem())
+//       )
+//     );
+//   },
+// ),

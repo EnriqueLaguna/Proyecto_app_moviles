@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto_app_moviles/Perfil/Edit_Catalogo/bloc/editcatalogo_bloc.dart';
 import 'package:proyecto_app_moviles/Perfil/Edit_Catalogo/item_Catalogo.dart';
+import 'package:proyecto_app_moviles/Perfil/create_catalogo_item.dart';
 
 class ShowCatalogoItem extends StatefulWidget {
   ShowCatalogoItem({Key? key}) : super(key: key);
@@ -27,6 +28,18 @@ class _ShowCatalogoItemState extends State<ShowCatalogoItem> {
                   color: Colors.lightGreen,
                   fontSize: 24,
                   fontWeight: FontWeight.bold),
+            ),
+            MaterialButton(
+              color: Colors.lightGreen,
+              child: Text("Agregar planta al catálogo"),
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: ((context) => CreateCatalogoItem())
+                  )
+                );
+              },
             ),
             BlocConsumer<EditcatalogoBloc, EditcatalogoState>(
               listener: (context, state) {

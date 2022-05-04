@@ -41,6 +41,9 @@ flutter:
     - assets/images/loginBackground.jpg
     - assets/images/spider-plant.png
     - assets/images/plant-pot.png
+    - assets/images/perfil_background.jpg
+    - assets/images/catalogo_backGround.jpg
+    - assets/images/cuidado_backGround.jpeg
   fonts:
     - family: Iconos
       fonts:

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto_app_moviles/Perfil/Edit_Cuidados/bloc/editcuidados_bloc.dart';
 import 'package:proyecto_app_moviles/Perfil/Edit_Cuidados/item_Cuidados.dart';
+import 'package:proyecto_app_moviles/Perfil/create_cuidados_item.dart';
 
 class ShowCuidadosItem extends StatefulWidget {
   ShowCuidadosItem({Key? key}) : super(key: key);
@@ -27,6 +28,18 @@ class _ShowCuidadosItemState extends State<ShowCuidadosItem> {
                   color: Colors.lightGreen,
                   fontSize: 24,
                   fontWeight: FontWeight.bold),
+            ),
+            MaterialButton(
+              color: Colors.lightGreen,
+              child: Text("Crear nuevo tip de cuidado"),
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: ((context) => CreateCuidadosItem())
+                  )
+                );
+              },
             ),
             BlocConsumer<EditcuidadosBloc, EditcuidadosState>(
               listener: (context, state) {
