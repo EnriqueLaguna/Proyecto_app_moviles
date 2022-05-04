@@ -13,6 +13,12 @@ class CuidadosPage extends StatefulWidget {
 
 class _CuidadosPageState extends State<CuidadosPage> {
   final searchController = TextEditingController();
+  List<Map<String, dynamic>>? data;
+  String filter = "";
+
+  List<Map<String,dynamic>> getFilteredTips(String filter){
+    return data!.where((e) => e["title"].toString().toLowerCase().contains(filter)).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +36,19 @@ class _CuidadosPageState extends State<CuidadosPage> {
                 fontWeight: FontWeight.bold),
           ),
           TextFormField(
+            onChanged: (val){
+              setState(() {
+                filter = val;
+              });
+            },
             decoration: InputDecoration(
               floatingLabelBehavior: FloatingLabelBehavior.never,
               labelText: "Nombre de la planta..",
               isDense: true,
-              suffixIcon: MaterialButton(onPressed: (){}, child: Text("BUSCAR", style: TextStyle(color: Colors.yellow[700]),),),
+              suffixIcon: MaterialButton(
+                onPressed: (){}, 
+                child: Text("BUSCAR", style: TextStyle(color: Colors.yellow[700]),),
+              ),
             ),
           ),
           BlocConsumer<CuidadosBloc, CuidadosState>(
@@ -45,14 +59,14 @@ class _CuidadosPageState extends State<CuidadosPage> {
               if(state is CuidadosError){
                 return Center(child: CircularProgressIndicator(),);
               } else if (state is CuidadosSuccess){
-                var data = state.data;
+                data = filter.isEmpty? state.data : getFilteredTips(filter);
                 return SizedBox(
                   height: MediaQuery.of(context).size.height * 0.5,
                   child: RefreshIndicator(
                     onRefresh: () async => BlocProvider.of<CuidadosBloc>(context).add(CuidadosGetEvent()),
                     child: GridView.builder(
                       physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                        itemCount: data.length,
+                        itemCount: data!.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           mainAxisSpacing: 20.0,
@@ -60,7 +74,7 @@ class _CuidadosPageState extends State<CuidadosPage> {
                               (MediaQuery.of(context).size.height / 1.7),
                         ),
                         itemBuilder: (BuildContext context, index) {
-                          return ItemCuidados(allCuidadosData: data[index],);
+                          return ItemCuidados(allCuidadosData: data![index],);
                         }),
                   ),
                 );
