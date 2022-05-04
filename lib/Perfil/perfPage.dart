@@ -22,89 +22,94 @@ class _PerfilState extends State<Perfil> {
   Widget build(BuildContext context) {
     User user = FirebaseAuth.instance.currentUser!;
     return Center(
-      child: Column(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            // height: MediaQuery.of(context).size.height *.3,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/perfil_background.jpg"),
-                fit: BoxFit.cover
-
-              )
-            ),
-            child: Column(
-              children: [
-                SizedBox(height: 16,),
-                CircleAvatar(
-                  foregroundImage: NetworkImage(user.photoURL.toString()),
-                  radius: 64,
-                ),
-                SizedBox(height: 16,),
-                Text(user.displayName.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
-                SizedBox(height: 8,),
-                Text(user.email.toString(), style: TextStyle(color: Colors.black54),),
-              ],
-            ),
-          ),
-          GestureDetector(
-            onTap: (){
-              BlocProvider.of<EditcatalogoBloc>(context).add(GetAllMyDataEvent());
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: ((context) => ShowCatalogoItem())
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          double height=constraints.maxHeight*0.28, height1=constraints.maxHeight-2*height;
+          return Column(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: height1,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/perfil_background.jpg"),
+                  fit: BoxFit.cover
+      
                 )
-              );
-            },
-            child:
-              Container(
+              ),
+              child: Column(
+                children: [
+                  SizedBox(height: 16,),
+                  CircleAvatar(
+                    foregroundImage: NetworkImage(user.photoURL.toString()),
+                    radius: 48,
+                  ),
+                  SizedBox(height: 16,),
+                  Text(user.displayName.toString(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
+                  SizedBox(height: 8,),
+                  Text(user.email.toString(), style: TextStyle(color: Colors.black54),),
+                ],
+              ),
+            ),
+            GestureDetector(
+              onTap: (){
+                BlocProvider.of<EditcatalogoBloc>(context).add(GetAllMyDataEvent());
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: ((context) => ShowCatalogoItem())
+                  )
+                );
+              },
+              child:
+                Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/catalogo_backGround.jpg"),
+                      fit: BoxFit.cover,
+                      colorFilter:ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.darken),
+                    )
+                  ),
+                  width: MediaQuery.of(context).size.width,
+                  height: height,              
+                  child: Center(
+                    child: Container(
+                      child: Text("Mi catálogo", style: TextStyle(color: Colors.white70, fontSize: 40, fontStyle: FontStyle.italic,),),
+                    ),
+                  ),
+                ),
+                
+            ),
+            GestureDetector(
+              onTap: (){
+                BlocProvider.of<EditcuidadosBloc>(context).add(GetAllMyDataEventCuidados());
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: ((context) => ShowCuidadosItem())
+                  )
+                );
+              },
+              child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/images/catalogo_backGround.jpg"),
+                    image: AssetImage("assets/images/cuidado_backGround.jpeg"),
                     fit: BoxFit.cover,
                     colorFilter:ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.darken),
                   )
                 ),
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * .2527,              
+                height: height,
                 child: Center(
-                  child: Container(
-                    child: Text("Mi catalogo", style: TextStyle(color: Colors.white70, fontSize: 40, fontStyle: FontStyle.italic,),),
+                    child: Container(
+                      child: Text("Mis tips", style: TextStyle(color: Colors.white70, fontSize: 40, fontStyle: FontStyle.italic,),),
+                    ),
                   ),
-                ),
               ),
-              
-          ),
-          GestureDetector(
-            onTap: (){
-              BlocProvider.of<EditcuidadosBloc>(context).add(GetAllMyDataEventCuidados());
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: ((context) => ShowCuidadosItem())
-                )
-              );
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/cuidado_backGround.jpeg"),
-                  fit: BoxFit.cover,
-                  colorFilter:ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.darken),
-                )
-              ),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * .2527,
-              child: Center(
-                  child: Container(
-                    child: Text("Mis tips", style: TextStyle(color: Colors.white70, fontSize: 40, fontStyle: FontStyle.italic,),),
-                  ),
-                ),
             ),
-          ),
-        ],
+          ],
+        );
+        }
       ),
     );
   }

@@ -50,7 +50,7 @@ class EditcuidadosBloc extends Bloc<EditcuidadosEvent, EditcuidadosState> {
 
     FutureOr<void> _takePicture(OnEditTakePictureEvent event, emit) async {
     emit(EditCuidadosLoadingState());
-    await _getImage();
+    await _getImage(event.isCamera);
     if(_selectedPicture != null){
       emit(EditFotosEditState(picture: _selectedPicture!));
     } else {
@@ -58,9 +58,9 @@ class EditcuidadosBloc extends Bloc<EditcuidadosEvent, EditcuidadosState> {
     }
   }
 
-  Future<void>_getImage() async {
+  Future<void>_getImage(bool isCamera) async {
     final pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.camera,
+      source: isCamera?ImageSource.camera:ImageSource.gallery,
       maxHeight: 720,
       maxWidth: 720,
       imageQuality: 85,

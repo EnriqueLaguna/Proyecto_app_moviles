@@ -18,7 +18,13 @@ class OnClickEditarButtonEvent extends EditcuidadosEvent{
   List<Object> get props => [dataToEdit];
 }
 
-class OnEditTakePictureEvent extends EditcuidadosEvent{}
+class OnEditTakePictureEvent extends EditcuidadosEvent{
+  final bool isCamera;
+
+  OnEditTakePictureEvent({required this.isCamera});
+  @override
+  List<Object> get props => [this.isCamera];
+}
 
 class OnEditSaveDataEvent extends EditcuidadosEvent{
   final Map<String, dynamic> dataToSaveEdit;

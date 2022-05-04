@@ -7,7 +7,13 @@ abstract class CreateCuidadosEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class OnCreateTakePictureEvent extends CreateCuidadosEvent{}
+class OnCreateTakePictureEvent extends CreateCuidadosEvent{
+  final bool isCamera;
+
+  OnCreateTakePictureEvent({required this.isCamera});
+  @override
+  List<Object> get props => [this.isCamera];
+}
 
 class OnCreateSaveDataEvent extends CreateCuidadosEvent{
   final Map<String, dynamic> dataToSave;
