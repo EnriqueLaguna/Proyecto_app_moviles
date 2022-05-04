@@ -33,7 +33,7 @@ class MapaBloc extends Bloc<MapaEvent, MapaState> {
       await FirebaseFirestore.instance
         .collection("users")
         .doc("${FirebaseAuth.instance.currentUser!.uid}")
-        .update({"shopListId": newPedidos});
+        .update({"shippingListId": newPedidos});
 
       await FirebaseFirestore.instance.collection("shippings").doc(event.itemId).delete();
 

@@ -17,13 +17,20 @@ class Mapa extends StatefulWidget {
 }
 
 class _MapaState extends State<Mapa> {
+  int index = 0;
+  @override
+  void initState() {
+    index = 0;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    int index = 0;
+    
     return FirestoreListView(
       query: FirebaseFirestore.instance.collection("shippings").where("buyer", isEqualTo: FirebaseAuth.instance.currentUser!.uid),
       itemBuilder: (context, doc){
-        ++index;
+        index++;
         return GestureDetector(
           onTap: () {
             showDialog(context: context, builder: (BuildContext context){
@@ -53,6 +60,7 @@ class _MapaState extends State<Mapa> {
                   TextButton(
                     onPressed: (){
                       BlocProvider.of<MapaBloc>(context).add(DeletePedidoEvent(itemId: doc.id));
+                      index--;
                       Navigator.of(context).pop();
                     },
                     child: Text("Confirmar recepción", style: TextStyle(color: Colors.yellow[700]),)
