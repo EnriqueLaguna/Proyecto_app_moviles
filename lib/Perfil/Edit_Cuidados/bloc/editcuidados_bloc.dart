@@ -18,6 +18,7 @@ class EditcuidadosBloc extends Bloc<EditcuidadosEvent, EditcuidadosState> {
     on<GetAllMyDataEventCuidados>(_getAllMyData);
     on<OnEditTakePictureEvent>(_takePicture);
     on<OnEditSaveDataEvent>(_saveEditData);
+    on<OnDeleteItemEvent>(_deleteItem);
   }
 
   FutureOr<void> _getAllMyData(event, emit) async {
@@ -158,6 +159,60 @@ class EditcuidadosBloc extends Bloc<EditcuidadosEvent, EditcuidadosState> {
     }catch(e){
       return "";
     }
+  }
+  Future<void> _deleteItem(OnDeleteItemEvent event, Emitter emit) async {
+    emit(EditCuidadosLoadingState());
+    try{
+        //ID of delete item
+      String idDoc = event.id;
+
+      // Get all items in user's array 
+      var queryUser = await FirebaseFirestore.instance
+        .collection("users")
+        .doc("${FirebaseAuth.instance.currentUser!.uid}");
+
+      var docsRef = await queryUser.get();
+      List<dynamic> cuidadosListIds = docsRef.data()?["tipsListId"];
+
+      List<dynamic> newCuidadosListIds = [];
+
+      // Remove item to delete from the array
+      for(var id in cuidadosListIds){
+        if(id != idDoc){
+          newCuidadosListIds.add(id);
+        }
+      }
+
+      //Update new array to the user
+      await FirebaseFirestore.instance
+        .collection("users")
+        .doc("${FirebaseAuth.instance.currentUser!.uid}")
+        .update({"tipsListId":newCuidadosListIds});
+
+      //Delete the doc from tips collection
+      await FirebaseFirestore.instance
+        .collection("tips")
+        .doc(idDoc)
+        .delete();
+
+      //Get the list again
+      var queryFotos = await FirebaseFirestore.instance
+      .collection("tips")
+      .get();
+
+    var allMyTipsList = queryFotos.docs
+      .where((element) => newCuidadosListIds.contains(element.id))
+      .map((e) => e.data().cast<String, dynamic>()..addAll({"docId":e.id}))
+      .toList();
+
+      emit(EditCuidadosSuccessState());
+      emit(EditCuidadosSuccess(EditData: allMyTipsList));
+    }catch(e){
+      print("Error al borrar elemento: ${e}");
+      emit(EditCuidadosError());
+    }
+
+
   }
 
 }

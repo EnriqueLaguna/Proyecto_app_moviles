@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:proyecto_app_moviles/Perfil/Edit_Cuidados/bloc/editcuidados_bloc.dart';
 import 'package:proyecto_app_moviles/Perfil/Edit_Cuidados/item_Cuidados_edit.dart';
 
 class ItemCuidados extends StatefulWidget {
@@ -38,27 +39,43 @@ class _ItemCuidadosState extends State<ItemCuidados> {
                         fit: BoxFit.cover,
                       ),
                       Spacer(),
-                      MaterialButton(
-                        color: Colors.lightGreen,
-                        child: Text("Editar"),
-                        onPressed:(){
-                          //Obtener la infomacion de la imagen que editare. Necesito el Doc
-                          String dataToEdit = widget.allCuidadosData["docId"];
-                          bool switchValue = widget.allCuidadosData["public"];
-                          //print(dataToEdit);
-                          //BlocProvider.of<MisfotosBloc>(context).add(OnClickEditarButtonEvent(dataToEdit: dataToEdit));
-                          //Usar Navigation.push
-                          Navigator.push(
-                            context, 
-                            MaterialPageRoute(builder: (context) => MisCuidadosEdit(
-                              docIdString: dataToEdit, 
-                              switchCurrentValue:switchValue,
-                              currentImage: widget.allCuidadosData["picture"],
-                              currentName: widget.allCuidadosData["title"],
-                              currentDescription: widget.allCuidadosData["description"],
-                            ))
-                          );
-                        }
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          MaterialButton(
+                            minWidth: 50,
+                            color: Colors.lightGreen,
+                            child: Text("Editar"),
+                            onPressed:(){
+                              //Obtener la infomacion de la imagen que editare. Necesito el Doc
+                              String dataToEdit = widget.allCuidadosData["docId"];
+                              bool switchValue = widget.allCuidadosData["public"];
+                              //print(dataToEdit);
+                              //BlocProvider.of<MisfotosBloc>(context).add(OnClickEditarButtonEvent(dataToEdit: dataToEdit));
+                              //Usar Navigation.push
+                              Navigator.push(
+                                context, 
+                                MaterialPageRoute(builder: (context) => MisCuidadosEdit(
+                                  docIdString: dataToEdit, 
+                                  switchCurrentValue:switchValue,
+                                  currentImage: widget.allCuidadosData["picture"],
+                                  currentName: widget.allCuidadosData["title"],
+                                  currentDescription: widget.allCuidadosData["description"],
+                                ))
+                              );
+                            }
+                          ),
+                          MaterialButton(
+                            minWidth: 50,
+                            color: Colors.red[800] ,
+                            child: Text("Borrar"),
+                            onPressed: (){
+                              String idDataToDelete = widget.allCuidadosData["docId"];
+                              BlocProvider.of<EditcuidadosBloc>(context).add(OnDeleteItemEvent(id:idDataToDelete));
+                            },
+
+                          )
+                        ],
                       ),
                     ],
                   ),

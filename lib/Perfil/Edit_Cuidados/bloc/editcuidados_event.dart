@@ -34,3 +34,10 @@ class OnEditSaveDataEvent extends EditcuidadosEvent{
   @override
   List<Object> get props => [dataToSaveEdit];
 }
+
+class OnDeleteItemEvent extends EditcuidadosEvent{
+  final String id;
+  OnDeleteItemEvent({required this.id});
+  @override
+  List<Object> get props => [id];
+} 
