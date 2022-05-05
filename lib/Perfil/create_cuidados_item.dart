@@ -14,7 +14,7 @@ class CreateCuidadosItem extends StatefulWidget {
 class _CreateCuidadosItemState extends State<CreateCuidadosItem> {
   var _TipsItemName = TextEditingController();
   var _TipsItemDescription = TextEditingController();
-  bool _defaultSwitchValue = false;
+  bool _defaultSwitchValue = true;
   File? image;
 
   @override
@@ -24,11 +24,11 @@ class _CreateCuidadosItemState extends State<CreateCuidadosItem> {
         // TODO: implement listener
         if(state is CreatePictureErrorState){
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Error al elegir imagen valida..."))
+            SnackBar(content: Text("Error al seleccionar la imagen."))
           );
         } else if(state is CreateCuidadosErrorState){
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Error al guardar la fshare"))
+            SnackBar(content: Text("Error al guardar el elemento."))
           );
         }else if(state is CreateSuccessState){
           _TipsItemName.clear();
@@ -62,11 +62,22 @@ class _CreateCuidadosItemState extends State<CreateCuidadosItem> {
                         height: 120,
                       )
                     : Container(),
-                MaterialButton(
-                  child: Text("Foto"), 
-                  onPressed: () {
-                    BlocProvider.of<CreateCuidadosBloc>(context).add(OnCreateTakePictureEvent());
-                  }
+                Row(
+                  children: [
+                    TextButton(
+                      child: Text("Tomar foto"), 
+                      onPressed: () {
+                        BlocProvider.of<CreateCuidadosBloc>(context).add(OnCreateTakePictureEvent(isCamera: true));
+                      }
+                    ),
+                    SizedBox(width: 30,),
+                    TextButton(
+                      child: Text("Elegir foto"), 
+                      onPressed: () {
+                        BlocProvider.of<CreateCuidadosBloc>(context).add(OnCreateTakePictureEvent(isCamera: false));
+                      }
+                    ),
+                  ],mainAxisAlignment: MainAxisAlignment.center,
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.all(8.0),
@@ -74,7 +85,7 @@ class _CreateCuidadosItemState extends State<CreateCuidadosItem> {
                     children: [
                       Container(
                         padding: EdgeInsetsDirectional.all(10.0),
-                        child: Text("Titulo del nuevo tip de cuidado"),
+                        child: Text("Título del nuevo tip de cuidado"),
                       ),
                       TextField(
                         controller: _TipsItemName,
@@ -84,7 +95,7 @@ class _CreateCuidadosItemState extends State<CreateCuidadosItem> {
                       ),
                       Container(
                         padding: EdgeInsetsDirectional.all(10.0),
-                        child: Text("Descripcion del nuevo tip de cuidado"),
+                        child: Text("Descripción del nuevo tip de cuidado"),
                       ),
                       TextField(
                         controller: _TipsItemDescription,
@@ -106,6 +117,7 @@ class _CreateCuidadosItemState extends State<CreateCuidadosItem> {
                 ),
                 MaterialButton(
                   child: Text("Guardar"),
+                  color: Colors.lightGreen,
                   onPressed: () {
                     Map<String, dynamic> TipsData = {
                       "title": _TipsItemName.value.text,

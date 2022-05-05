@@ -99,7 +99,7 @@ class CreateCuidadosBloc extends Bloc<CreateCuidadosEvent, CreateCuidadosState> 
 
   FutureOr<void> _takePicture(OnCreateTakePictureEvent event, emit) async {
     emit(CreateLoadingState());
-    await _getImage();
+    await _getImage(event.isCamera);
     if(_selectedPicture != null){
       emit(CreatePictureChangedState(picture: _selectedPicture!));
     } else {
@@ -107,9 +107,9 @@ class CreateCuidadosBloc extends Bloc<CreateCuidadosEvent, CreateCuidadosState> 
     }
   }
 
-  Future<void>_getImage() async {
+  Future<void>_getImage(bool isCamera) async {
     final pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.camera,
+      source: isCamera?ImageSource.camera:ImageSource.gallery,
       maxHeight: 720,
       maxWidth: 720,
       imageQuality: 85,

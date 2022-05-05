@@ -15,7 +15,7 @@ class _CreateCatalogoItemState extends State<CreateCatalogoItem> {
   var _catalogueItemName = TextEditingController();
   var _catalogueItemPrice = TextEditingController();
   var _catalogueItemDescription = TextEditingController();
-  bool _defaultSwitchValue = false;
+  bool _defaultSwitchValue = true;
   File? image;
 
   @override
@@ -25,11 +25,11 @@ class _CreateCatalogoItemState extends State<CreateCatalogoItem> {
         // TODO: implement listener
         if(state is CreatePictureErrorState){
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Error al elegir imagen valida..."))
+            SnackBar(content: Text("Error al seleccionar la imagen.",style: TextStyle(color: Colors.brown[900]),),backgroundColor: Colors.amber,)
           );
         } else if(state is CreateCatalogoErrorState){
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Error al guardar la fshare"))
+            SnackBar(content: Text("Error al guardar el elemento.",style: TextStyle(color: Colors.brown[900]),),backgroundColor: Colors.amber,)
           );
         }else if(state is CreateSuccessState){
           _catalogueItemName.clear();
@@ -44,7 +44,7 @@ class _CreateCatalogoItemState extends State<CreateCatalogoItem> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: Text("Nuevo objeto catalogo"),
+            title: Text("Nuevo objeto de catálogo"),
           ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -64,11 +64,22 @@ class _CreateCatalogoItemState extends State<CreateCatalogoItem> {
                         height: 120,
                       )
                     : Container(),
-                MaterialButton(
-                  child: Text("Foto"), 
-                  onPressed: () {
-                    BlocProvider.of<CreateCatalogoBloc>(context).add(OnCreateTakePictureEvent());
-                  }
+                Row(
+                  children: [
+                    TextButton(
+                      child: Text("Tomar foto"), 
+                      onPressed: () {
+                        BlocProvider.of<CreateCatalogoBloc>(context).add(OnCreateTakePictureEvent(isCamera: true));
+                      }
+                    ),
+                    SizedBox(width: 30,),
+                    TextButton(
+                      child: Text("Elegir foto"), 
+                      onPressed: () {
+                        BlocProvider.of<CreateCatalogoBloc>(context).add(OnCreateTakePictureEvent(isCamera: false));
+                      }
+                    ),
+                  ],mainAxisAlignment: MainAxisAlignment.center,
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.all(8.0),
@@ -76,7 +87,7 @@ class _CreateCatalogoItemState extends State<CreateCatalogoItem> {
                     children: [
                       Container(
                         padding: EdgeInsetsDirectional.all(10.0),
-                        child: Text("Titulo del nuevo item"),
+                        child: Text("Título del nuevo ítem"),
                       ),
                       TextField(
                         controller: _catalogueItemName,
@@ -86,7 +97,7 @@ class _CreateCatalogoItemState extends State<CreateCatalogoItem> {
                       ),
                       Container(
                         padding: EdgeInsetsDirectional.all(10.0),
-                        child: Text("Descripcion del nuevo item"),
+                        child: Text("Descripción del nuevo ítem"),
                       ),
                       TextField(
                         controller: _catalogueItemDescription,
@@ -98,7 +109,7 @@ class _CreateCatalogoItemState extends State<CreateCatalogoItem> {
                       ),
                       Container(
                         padding: EdgeInsetsDirectional.all(10.0),
-                        child: Text("Precio del nuevo item"),
+                        child: Text("Precio del nuevo ítem"),
                       ),
                       TextField(
                         keyboardType: TextInputType.number,
@@ -118,7 +129,8 @@ class _CreateCatalogoItemState extends State<CreateCatalogoItem> {
                   ),
                 ),
                 MaterialButton(
-                  child: Text("Guardar"),
+                  child: Text("Guardar", style: TextStyle(color: Colors.yellow[50]),),
+                  color: Colors.lightGreen,
                   onPressed: () {
                     Map<String, dynamic> CatalogueData = {
                       "title": _catalogueItemName.value.text,

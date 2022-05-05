@@ -7,7 +7,13 @@ abstract class CreateCatalogoEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class OnCreateTakePictureEvent extends CreateCatalogoEvent{}
+class OnCreateTakePictureEvent extends CreateCatalogoEvent{
+  final bool isCamera;
+
+  OnCreateTakePictureEvent({required this.isCamera});
+  @override
+  List<Object> get props => [this.isCamera];
+}
 
 class OnCreateSaveDataEvent extends CreateCatalogoEvent{
   final Map<String, dynamic> dataToSave;

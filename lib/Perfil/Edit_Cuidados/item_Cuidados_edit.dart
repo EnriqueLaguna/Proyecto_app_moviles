@@ -89,12 +89,23 @@ class _MisCuidadosEdit extends State<MisCuidadosEdit> {
                     height: 240,
                     width: 240,
                   ),
-                MaterialButton(
-                    child: Text("Foto"),
-                    onPressed: () {
-                      BlocProvider.of<EditcuidadosBloc>(context)
-                          .add(OnEditTakePictureEvent());
-                    }),
+                Row(
+                  children: [
+                    TextButton(
+                      child: Text("Tomar foto"), 
+                      onPressed: () {
+                        BlocProvider.of<EditcuidadosBloc>(context).add(OnEditTakePictureEvent(isCamera: true));
+                      }
+                    ),
+                    SizedBox(width: 30,),
+                    TextButton(
+                      child: Text("Elegir foto"), 
+                      onPressed: () {
+                        BlocProvider.of<EditcuidadosBloc>(context).add(OnEditTakePictureEvent(isCamera: false));
+                      }
+                    ),
+                  ],mainAxisAlignment: MainAxisAlignment.center,
+                ),
                 TextField(
                   controller: _newTitleC,
                   decoration: InputDecoration(
@@ -121,6 +132,7 @@ class _MisCuidadosEdit extends State<MisCuidadosEdit> {
                     }),
                 MaterialButton(
                   child: Text("Editar"),
+                  color: Colors.lightGreen,
                   onPressed: () {
                     Map<String, dynamic> fshareEditData = {
                       "newtitle": _newTitleC.value.text,

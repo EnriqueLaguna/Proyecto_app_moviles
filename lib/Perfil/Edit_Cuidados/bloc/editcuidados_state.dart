@@ -34,4 +34,6 @@ class EditCuidadosLoadingState extends EditcuidadosState{}
 
 class EditCuidadosSuccessState extends EditcuidadosState{}
 
+class DeleteItemCuidadosSuccess extends EditcuidadosState{}
+
 class EditErrorState extends EditcuidadosState{} 
