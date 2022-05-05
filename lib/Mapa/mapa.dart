@@ -79,27 +79,8 @@ class _MapaState extends State<Mapa> {
                   radius: 24,
                   backgroundImage: NetworkImage("https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=20.67517&lon=-103.34733&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*"),
                 ),
-<<<<<<< HEAD
-                actions: [
-                  TextButton(
-                    onPressed: (){
-                      BlocProvider.of<MapaBloc>(context).add(DeletePedidoEvent(itemId: doc.id));
-                      index = 0;
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("Confirmar recepción", style: TextStyle(color: Colors.yellow[700]),)
-                  ),
-                  TextButton(
-                    onPressed: (){Navigator.of(context).pop();},
-                    child: Text("Aceptar", style: TextStyle(color: Colors.yellow[700]),)
-                  ),
-                ],
-              );
-            });
-=======
               ),
             );
->>>>>>> 39304d70706fe8cce561b1e53a73d9e872c9b42d
           },
         );
       }
