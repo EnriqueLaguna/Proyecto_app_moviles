@@ -42,8 +42,6 @@ class CreateCuidadosBloc extends Bloc<CreateCuidadosEvent, CreateCuidadosState> 
         return false;
       }
 
-      print(dataToSave);
-
       var docRef = await FirebaseFirestore.instance
         .collection("tips")
         .add(dataToSave);

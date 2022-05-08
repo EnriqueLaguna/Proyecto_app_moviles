@@ -94,7 +94,6 @@ class EditcatalogoBloc extends Bloc<EditcatalogoEvent, EditcatalogoState> {
       .map((e) => e.data().cast<String, dynamic>()..addAll({"docId":e.id}))
       .toList();
 
-    print(_edited);
     if(_edited){
       emit(EditCatalogoSuccessState());
       emit(EditCatalogoSuccess(EditData: allMyFotosList));
@@ -115,9 +114,6 @@ class EditcatalogoBloc extends Bloc<EditcatalogoEvent, EditcatalogoState> {
       if(_imageUrl == ""){
         _imageUrl = dataToSaveEdit["newFotoShare"];
       }
-
-
-      print(_imageUrl);
 
       //Update return value
       //Intentar actualizar el doc

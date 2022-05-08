@@ -42,8 +42,6 @@ class CreateCatalogoBloc extends Bloc<CreateCatalogoEvent, CreateCatalogoState> 
         return false;
       }
 
-      print(dataToSave);
-
       var docRef = await FirebaseFirestore.instance
         .collection("catalogue")
         .add(dataToSave);

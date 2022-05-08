@@ -94,7 +94,6 @@ class EditcuidadosBloc extends Bloc<EditcuidadosEvent, EditcuidadosState> {
       .map((e) => e.data().cast<String, dynamic>()..addAll({"docId":e.id}))
       .toList();
 
-    print(_edited);
     if(_edited){
       emit(EditCuidadosSuccessState());
       emit(EditCuidadosSuccess(EditData: allMyFotosList));
@@ -115,9 +114,6 @@ class EditcuidadosBloc extends Bloc<EditcuidadosEvent, EditcuidadosState> {
       if(_imageUrl == ""){
         _imageUrl = dataToSaveEdit["newFotoShare"];
       }
-
-
-      print(_imageUrl);
 
       //Update return value
       //Intentar actualizar el doc
