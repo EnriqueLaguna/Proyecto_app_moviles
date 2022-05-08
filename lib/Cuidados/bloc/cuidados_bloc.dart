@@ -16,7 +16,6 @@ class CuidadosBloc extends Bloc<CuidadosEvent, CuidadosState> {
     try {
       var allDocs = await FirebaseFirestore.instance.collection("tips").get();
       List<Map<String, dynamic>> data = allDocs.docs.where((doc) => doc["public"]).map((e) => e.data()..addAll({"docId": e.id})).toList();;
-      print(data);
       emit(CuidadosSuccess(data: data));
     } catch (e) {
       emit(CuidadosError());

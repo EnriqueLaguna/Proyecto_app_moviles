@@ -23,7 +23,7 @@ void main() async {
           create: (context) => AuthBloc()..add(VerifyAuthEvent())
         ),
         BlocProvider(
-          create: ((context) => CreateCatalogoBloc()),
+          create: (context) => CreateCatalogoBloc(),
         ),
         BlocProvider(
           create: (context) => CatalogoBloc()..add(CatalogoGetEvent())
@@ -35,7 +35,7 @@ void main() async {
           create: (context) => CuidadosBloc()..add(CuidadosGetEvent())
         ),
         BlocProvider(
-          create: ((context) => CreateCuidadosBloc()),
+          create: (context) => CreateCuidadosBloc(),
         ),
         BlocProvider(
           create: (context) => EditcuidadosBloc()

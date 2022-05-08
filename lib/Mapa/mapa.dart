@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:proyecto_app_moviles/Mapa/bloc/mapa_bloc.dart';
+import 'package:proyecto_app_moviles/Mapa/tracking_page.dart';
 
 class Mapa extends StatefulWidget {
   Mapa({Key? key}) : super(key: key);
@@ -75,9 +76,12 @@ class _MapaState extends State<Mapa> {
                   percent: Random().nextDouble(),
                   progressColor: Colors.lightGreen,
                 ),
-                leading: CircleAvatar(
-                  radius: 24,
-                  backgroundImage: NetworkImage("https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=20.67517&lon=-103.34733&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*"),
+                leading: MaterialButton(
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => TrackingPage(location: doc["location"]),)),
+                  child: CircleAvatar(
+                    radius: 24,
+                    backgroundImage: NetworkImage("https://map.viamichelin.com/map/carte?map=viamichelin&z=10&lat=20.67517&lon=-103.34733&width=550&height=382&format=png&version=latest&layer=background&debug_pattern=.*"),
+                  ),
                 ),
               ),
             );
