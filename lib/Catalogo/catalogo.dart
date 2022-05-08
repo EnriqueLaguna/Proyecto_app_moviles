@@ -36,7 +36,7 @@ class _CatalogoState extends State<Catalogo> {
             TextFormField(
               onChanged: (val){
                 setState(() {
-                  filter=val;
+                  filter=val.toLowerCase();
                 });
               },
               decoration: InputDecoration(

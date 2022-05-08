@@ -37,7 +37,7 @@ class _CuidadosPageState extends State<CuidadosPage> {
           TextFormField(
             onChanged: (val){
               setState(() {
-                filter = val;
+                filter = val.toLowerCase();
               });
             },
             decoration: InputDecoration(
